@@ -2,50 +2,50 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 
 const serviceDetails = {
-  repair: {
-    title: "Repair of Computers & Printers",
-    image: "/services/repair.jpg",
-    content: `We diagnose hardware & software issues, remove malware, replace screens, repair printers, and much more.
-    Our expert technicians ensure minimal downtime and reliable service.`,
+  "web-design": {
+    title: "Website Design",
+    image: "/services/webdesign.jpg",
+    content: `We create visually stunning, responsive, and user-friendly websites tailored to your brand. 
+    From corporate sites to e-commerce platforms, our designs ensure seamless navigation, engaging layouts, 
+    and optimized performance across all devices.`,
   },
-  maintenance: {
-    title: "Preventative Maintenance",
-    image: "/services/maintenance.jpg",
-    content: `Regular maintenance extends equipment lifespan and improves efficiency.
-    We perform monthly checks, clean systems, and optimize performance.`,
+  "it-support": {
+    title: "IT Support",
+    image: "/services/itsuppport.webp",
+    content: `Our IT support team provides reliable troubleshooting, system maintenance, and proactive monitoring. 
+    We ensure smooth day-to-day operations by resolving hardware, software, and networking issues quickly and effectively.`,
   },
-  networking: {
-    title: "Structured Networking Solutions",
-    image: "/services/networking.jpg",
-    content: `We design, sell, and install networking solutions with brands like Cisco, TP-Link, Meraki, and Ubiquiti.
-    From structured cabling to performance audits, we keep your business connected.`,
+  "it-consulting": {
+    title: "IT Consulting",
+    image: "/services/it-consulting.jpg",
+    content: `We offer strategic IT consulting to help businesses align technology with growth. 
+    From infrastructure planning, cloud adoption, and cybersecurity solutions to digital transformation strategies, 
+    we guide you every step of the way.`,
   },
-  products: {
-    title: "Branded IT Products & Accessories",
-    image: "/services/products.jpg",
-    content: `We stock globally recognized IT products — from PCs and monitors 
-    to servers and networking equipment. Our inventory is ready for immediate dispatch.`,
+  "profile-design": {
+    title: "Company Profile Design",
+    image: "/services/company-profile.jpg",
+    content: `A well-crafted company profile sets you apart. 
+    We design professional and compelling profiles that highlight your brand identity, services, and achievements, 
+    ensuring a powerful first impression for your clients and partners.`,
   },
-  cctv: {
-    title: "Security Surveillance Hardware",
-    image: "/services/cctv.jpg",
-    content: `Blissman provides and installs CCTV and IP cameras, access control, 
-    and alarm systems. We also supply smoke detectors and heat sensors to keep your 
-    facilities safe and secure.`,
+  "computer-services": {
+    title: "Computer Services",
+    image: "/services/computer-services.jpg",
+    content: `From software installation and system upgrades to virus removal and performance optimization, 
+    we provide complete computer services. Our experts ensure your systems stay efficient, secure, and up-to-date.`,
   },
-  software: {
-    title: "Software Solutions",
-    image: "/services/software.jpg",
-    content: `We provide trusted software tools and custom solutions tailored 
-    for your business needs. Whether for accounting, security, or productivity, 
-    our software keeps you ahead.`,
+  "computer-repair": {
+    title: "Computer Repair Services",
+    image: "/services/computer-repair.jpg",
+    content: `We specialize in diagnosing and repairing computer issues — whether it’s faulty hardware, 
+    broken screens, overheating, or system errors. Our certified technicians get your devices back in working order fast.`,
   },
-  printing: {
-    title: "Bulk Printing",
-    image: "/services/printing.jpg",
-    content: `Our printing services cover brochures, flyers, books, magazines, 
-    banners, calendars, and promotional branding. We deliver high-quality prints 
-    at scale for your business needs.`,
+  domains: {
+    title: "Domains & Hosting",
+    image: "/services/domains.jpg",
+    content: `Secure your online presence with our domain registration and reliable hosting services. 
+    We provide fast, secure, and scalable solutions to keep your website accessible and performing at its best.`,
   },
 };
 

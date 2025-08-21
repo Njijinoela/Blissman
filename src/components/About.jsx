@@ -1,28 +1,42 @@
-import React from "react";
-import { Users, Award, Clock, Globe } from "lucide-react";
+import React, { useState } from "react";
+import {
+  Users,
+  Award,
+  Clock,
+  Globe,
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+} from "lucide-react";
 
 const About = () => {
+  // Contact form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
+  // About data
   const stats = [
-    {
-      icon: Users,
-      number: "10,000+",
-      label: "Happy Customers",
-    },
-    {
-      icon: Award,
-      number: "15+",
-      label: "Years Experience",
-    },
-    {
-      icon: Clock,
-      number: "99.9%",
-      label: "Uptime Record",
-    },
-    {
-      icon: Globe,
-      number: "5+",
-      label: "Countries Served",
-    },
+    { icon: Users, number: "10,000+", label: "Happy Customers" },
+    { icon: Award, number: "15+", label: "Years Experience" },
+    { icon: Clock, number: "99.9%", label: "Uptime Record" },
+    { icon: Globe, number: "5+", label: "Countries Served" },
   ];
 
   const team = [
@@ -47,221 +61,308 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* About Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Trusted Technology Partner Since 2019
-            </h2>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Blissman was established with an aim of providing latest
-              technology solutions and with a firm commit- ment to meet the
-              needs of both the corporate and the individual sector. We intend
-              to provide quality services and solutions which are personalized
-              to target and meet the needs of our clientele.
-            </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              In an industry which is fast growing especially in Afri- ca, and
-              with a vast area of potential, we are dedicated to giving our
-              customers new technology solutions and accessories at cost
-              effective prices, to satisfy the Kenyan market. To achieve this,
-              we stand by the founding principles of our organization;
-            </p>
-            <h5 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Innovation
-            </h5>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              The Blissman brand strongly believes in giving our cus- tomers
-              access to products that have met the best in- novation standards
-              in the respective industry of each product.
-            </p>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              To keep up your organization at the forefront of efficien- cy and
-              be a forward thinking company, Blissman pro- vides your
-              organization with a suite of business tools that go beyond IT
-              assets to serve as the foundation for all of your enterprise
-              solutions and services.
-            </p>
-            <h5 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Design
-            </h5>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Integrated experiences are inherently both physical andBLISSMAN
-              PROFILE digital, but “integration” doesn’t mean doing everything
-              at once in your organization. When enterprises use hardware and
-              software that integrates good design, both in- voke a feeling,
-              Both invoke an emotional response when staff and your end custom-
-              ers are using the products. The digital interface of hardware is
-              starting to catch up with the physical interaction with hardware,
-              Blissman gives you access to products that bring the intersection
-              of design when hardware and software are used together effectively
-              in an organization.
-            </p>
-            <h5 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Build
-            </h5>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Enterprises have accelerated the typical IT infrastructures which
-              continues to em- phasize stability over speed. Requests for
-              infrastructure services still often go through an assembly
-              line-style process involving many handoffs, long delays, and
-              frequent misunderstandings. Blissman seeks to build its clients
-              the best IT infrastructure that supports their bottom line
-              business objectives.
-            </p>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              To keep up your organization at the forefront of efficien- cy and
-              be a forward thinking company, Blissman pro- vides your
-              organization with a suite of business tools that go beyond IT
-              assets to serve as the foundation for all of your enterprise
-              solutions and services.
-            </p>
+    <>
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+                Trusted Technology Partner Since 2019
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Blissman was established with an aim of providing latest
+                technology solutions and with a firm commitment to meet the
+                needs of both the corporate and the individual sector.
+              </p>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                In a fast-growing industry in Africa, we are dedicated to giving
+                our customers innovative technology solutions and accessories at
+                cost-effective prices, to satisfy the Kenyan market.
+              </p>
+              <h5 className="text-3xl font-bold text-gray-900 mb-4">
+                Innovation
+              </h5>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                We strongly believe in giving our customers access to products
+                that meet the best innovation standards in each industry.
+              </p>
+              <h5 className="text-3xl font-bold text-gray-900 mb-4">Design</h5>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Integrated experiences are both physical and digital. Blissman
+                provides products where hardware and software work together
+                effectively, enhancing both staff and customer experiences.
+              </p>
+              <h5 className="text-3xl font-bold text-gray-900 mb-4">Build</h5>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                We build reliable IT infrastructure that supports your business
+                goals, reducing bottlenecks and inefficiencies in traditional IT
+                processes.
+              </p>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600 mb-1">
-                  24/7
+              <div className="grid grid-cols-2 gap-6">
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600 mb-1">
+                    24/7
+                  </div>
+                  <div className="text-sm text-gray-600">Support Available</div>
                 </div>
-                <div className="text-sm text-gray-600">Support Available</div>
-              </div>
-              <div className="text-center p-4 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600 mb-1">
-                  ISO 27001
+                <div className="text-center p-4 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600 mb-1">
+                    ISO 27001
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Security Certified
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600">Security Certified</div>
               </div>
             </div>
-          </div>
 
-          <div className="relative">
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
               <h3 className="text-2xl font-bold mb-6">Why Choose Blissman?</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Experience and background in both the local and
-                    international IT industry
-                  </span>
+              <ul className="space-y-4 list-disc pl-6">
+                <li>
+                  Experience and background in both the local and international
+                  IT industry
                 </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Vast experience in customer support and services, which
-                    would in turn mean excellent support and services given to
-                    our customers
-                  </span>
+                <li>Vast experience in customer support and services</li>
+                <li>Strong local IT market knowledge for tailored solutions</li>
+                <li>
+                  Expertise in building IT networks from the ground up for
+                  efficiency
                 </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Well acquainted with the local IT market thus easier to
-                    building long lasting business ties and provide the services
-                    tailored to the local business community
-                  </span>
+                <li>
+                  Access to the best software to transform into a digital-first
+                  organization
                 </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Our team is equipped with the best equipment and skills to
-                    build your Larger 6 IT network from the ground up to get you
-                    up to speed with running an IT effi- cient organization.
-                  </span>
+                <li>
+                  Maintenance and repair of IT accessories, including printers,
+                  desktops, and servers
                 </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    We have access to the best software in the market to help
-                    you transform into a digital first organization, with our
-                    software tools, we set them up in the IT infrastructure that
-                    we set up for your business.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Our team is able to fix your IT accessories when they need
-                    an update or scheduled repairs and maintenance in order to
-                    boost your organization’s pro- ductivity. This includes
-                    printers, Desktops, server infrastructure and any device you
-                    may have challenges with, we are a call away.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-white bg-opacity-20 rounded-full p-1 mr-3 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <span>
-                    Providing consultancy services in software and hardware in
-                    order to keep your organization up to speed with
-                    developments in the IT space, enabling your organization
-                    have a clear path to a digital future.
-                  </span>
+                <li>
+                  Consultancy services in software and hardware for a digital
+                  future
                 </li>
               </ul>
             </div>
           </div>
-        </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <stat.icon className="h-8 w-8 text-blue-600" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-gray-600">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Team Section */}
-        <div className="text-center">
-          <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            Meet Our Leadership Team
-          </h3>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Our experienced team brings together expertise in hosting, cloud
-            infrastructure, and customer success to deliver exceptional service.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
+          {/* Stats Section */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+            {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="relative mb-4">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg"
-                  />
+                <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className="h-8 w-8 text-blue-600" />
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 mb-1">
-                  {member.name}
-                </h4>
-                <p className="text-gray-600">{member.role}</p>
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-gray-600">{stat.label}</div>
               </div>
             ))}
           </div>
+
+          {/* Team Section */}
+          <div className="text-center">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              Meet Our Leadership Team
+            </h3>
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+              Our experienced team brings together expertise in hosting, cloud
+              infrastructure, and customer success to deliver exceptional
+              service.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {team.map((member, index) => (
+                <div key={index} className="text-center">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg mb-4"
+                  />
+                  <h4 className="text-xl font-semibold text-gray-900 mb-1">
+                    {member.name}
+                  </h4>
+                  <p className="text-gray-600">{member.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Ready to get started? Contact our team for personalized solutions
+              or get immediate support.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Info */}
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  Contact Information
+                </h3>
+                <div className="space-y-6">
+                  <div className="flex items-center">
+                    <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                      <Phone className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        Phone Support
+                      </h4>
+                      <p className="text-gray-600">
+                        +254 711 262396 / +254 780 008352
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Available 24/7 for emergencies
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <div className="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                      <Mail className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        Email Support
+                      </h4>
+                      <p className="text-gray-600">Blissmantech@gmail.com</p>
+                      <p className="text-sm text-gray-500">
+                        Response within 2 hours
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center">
+                    <div className="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                      <MapPin className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        Office Location
+                      </h4>
+                      <p className="text-gray-600">
+                        Plums Lane off Ojijo Road IBC Center
+                      </p>
+                      <p className="text-gray-600">Westlands, Nairobi Kenya</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                Send Us a Message
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Subject *
+                  </label>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select a subject</option>
+                    <option value="hosting">Web Hosting Inquiry</option>
+                    <option value="support">IT Support Request</option>
+                    <option value="billing">Billing Question</option>
+                    <option value="technical">Technical Issue</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows="5"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Describe your inquiry or issue in detail"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                >
+                  Send Message
+                  <Send className="ml-2 h-5 w-5" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

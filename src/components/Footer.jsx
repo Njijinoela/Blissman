@@ -1,5 +1,5 @@
 import React from "react";
-import { Facebook, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <div className="flex items-center mb-4">
-              <img src="/logo.jpeg" alt="logo" className="h-10 w-auto"></img>
+              <img src="/logo.png" alt="logo" className="h-10 w-auto"></img>
               <span className="ml-2 text-xl font-bold">BlissMan</span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
@@ -17,18 +17,6 @@ const Footer = () => {
               of business tools that go beyong IT assets since 2019.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-              >
-                <Twitter size={20} />
-              </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-blue-400 transition-colors"
@@ -47,7 +35,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Repair of computers and printers
+                  Website Design
                 </a>
               </li>
               <li>
@@ -55,7 +43,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Preventative maintenance of computers and printers
+                  IT Support
                 </a>
               </li>
               <li>
@@ -63,7 +51,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Structured Networking Solutions, Equipment and audits.
+                  IT Consulting
                 </a>
               </li>
               <li>
@@ -71,7 +59,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Branded IT products and Accessories
+                  Company Profile Design
                 </a>
               </li>
               <li>
@@ -79,7 +67,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Security surveillance Hardware
+                  Computer Services
                 </a>
               </li>
               <li>
@@ -87,7 +75,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Software
+                  Computer Repair Services
                 </a>
               </li>
               <li>
@@ -95,7 +83,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Bulk printing
+                  Domains
                 </a>
               </li>
             </ul>
@@ -111,30 +99,6 @@ const Footer = () => {
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Help Center
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  System Status
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Contact Support
                 </a>
               </li>
               <li>
@@ -176,8 +140,8 @@ const Footer = () => {
                   className="text-blue-400 mr-3 mt-1 flex-shrink-0"
                 />
                 <div className="text-gray-300">
-                  <div>123 Tech Street, Suite 100</div>
-                  <div>Nairobi,Kenya</div>
+                  <div>Plums Lane off Ojijo Road IBC Center</div>
+                  <div>Westlands, Nairobi Kenya</div>
                 </div>
               </div>
             </div>

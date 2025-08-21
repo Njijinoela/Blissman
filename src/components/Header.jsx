@@ -32,7 +32,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/logo.jpeg" alt="Blissman Logo" className="h-10 w-auto" />
+            <img src="/logo.png" alt="Blissman Logo" className="h-10 w-auto" />
             <span className="ml-2 text-xl font-bold text-gray-900">
               BlissMan
             </span>
@@ -66,17 +66,17 @@ const Header = () => {
                 About
               </Link>
               <Link
-                to="/contact"
+                to="/products"
                 className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
               >
-                Contact
+                Products
               </Link>
               <HashLink
                 smooth
-                to="/#pricing"
-                className="w-full block text-left bg-blue-600 text-white px-3 py-2 text-base font-medium hover:bg-blue-700 transition-colors mt-4"
+                to="/about#contact"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
               >
-                Get Started
+                Contact Us
               </HashLink>
             </div>
           </div>
@@ -103,7 +103,7 @@ const Header = () => {
                 Home
               </Link>
               <Link
-                to="/ service"
+                to="/service"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
               >
                 Services
@@ -121,17 +121,15 @@ const Header = () => {
                 About
               </Link>
               <Link
-                to="/contact"
+                to="/products"
                 className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Contact
-              </Link>
+              ></Link>
               <HashLink
                 smooth
-                to="/#pricing"
+                to="/about#contact"
                 className="w-full block text-left bg-blue-600 text-white px-3 py-2 text-base font-medium hover:bg-blue-700 transition-colors mt-4"
               >
-                Get Started
+                Contact Us
               </HashLink>
             </div>
           </div>

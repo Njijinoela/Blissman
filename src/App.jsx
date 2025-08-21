@@ -4,13 +4,13 @@ import Portfolio from "./pages/Portfolio";
 import Service from "./pages/Service";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
-import Pricing from "./components/Pricing";
 import About from "./components/About";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ServiceDetail from "./pages/ServiceDetails";
-
+import ServicesCarousel from "./pages/ServiceCarousel";
+import CallToAction from "./components/CallToAction";
+import QuoteWidget from "./components/QuoteWidget";
+import Products from "./components/Products";
 function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -24,8 +24,8 @@ function App() {
             element={
               <>
                 <Hero />
-                <Service />
-                <Pricing />
+                <ServicesCarousel />
+                <CallToAction />
               </>
             }
           />
@@ -35,10 +35,10 @@ function App() {
           <Route path="/service" element={<Service />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/products" element={<Products />} />
         </Routes>
       </div>
-
+      <QuoteWidget />
       <Footer />
     </div>
   );
