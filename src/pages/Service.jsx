@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import blissmanServices from "../data/ServiceData";
+import { blissmanServices } from "../data/ServiceData";
 
 const Services = () => {
   return (

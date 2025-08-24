@@ -1,80 +1,75 @@
-import React from "react";
+// src/pages/ServiceDetails.jsx
 import { useParams, Link } from "react-router-dom";
+import { blissmanServices } from "../data/ServiceData";
+import { portfolioItems } from "../data/PortfolioData";
 
-const serviceDetails = {
-  "web-design": {
-    title: "Website Design",
-    image: "/services/webdesign.jpg",
-    content: `We create visually stunning, responsive, and user-friendly websites tailored to your brand. 
-    From corporate sites to e-commerce platforms, our designs ensure seamless navigation, engaging layouts, 
-    and optimized performance across all devices.`,
-  },
-  "it-support": {
-    title: "IT Support",
-    image: "/services/itsuppport.webp",
-    content: `Our IT support team provides reliable troubleshooting, system maintenance, and proactive monitoring. 
-    We ensure smooth day-to-day operations by resolving hardware, software, and networking issues quickly and effectively.`,
-  },
-  "it-consulting": {
-    title: "IT Consulting",
-    image: "/services/it-consulting.jpg",
-    content: `We offer strategic IT consulting to help businesses align technology with growth. 
-    From infrastructure planning, cloud adoption, and cybersecurity solutions to digital transformation strategies, 
-    we guide you every step of the way.`,
-  },
-  "profile-design": {
-    title: "Company Profile Design",
-    image: "/services/company-profile.jpg",
-    content: `A well-crafted company profile sets you apart. 
-    We design professional and compelling profiles that highlight your brand identity, services, and achievements, 
-    ensuring a powerful first impression for your clients and partners.`,
-  },
-  "computer-services": {
-    title: "Computer Services",
-    image: "/services/computer-services.jpg",
-    content: `From software installation and system upgrades to virus removal and performance optimization, 
-    we provide complete computer services. Our experts ensure your systems stay efficient, secure, and up-to-date.`,
-  },
-  "computer-repair": {
-    title: "Computer Repair Services",
-    image: "/services/computer-repair.jpg",
-    content: `We specialize in diagnosing and repairing computer issues — whether it’s faulty hardware, 
-    broken screens, overheating, or system errors. Our certified technicians get your devices back in working order fast.`,
-  },
-  domains: {
-    title: "Domains & Hosting",
-    image: "/services/domains.jpg",
-    content: `Secure your online presence with our domain registration and reliable hosting services. 
-    We provide fast, secure, and scalable solutions to keep your website accessible and performing at its best.`,
-  },
-};
-
-const ServiceDetail = () => {
+export default function ServiceDetails() {
   const { id } = useParams();
-  const service = serviceDetails[id];
+  const service = blissmanServices.find((s) => s.id === id);
 
   if (!service) {
-    return <p className="text-center mt-20">Service not found.</p>;
+    return <h2 className="text-center text-xl mt-10">Service not found</h2>;
   }
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 py-20">
-      <img
-        src={service.image}
-        alt={service.title}
-        className="w-full h-64 object-cover rounded-lg shadow-md mb-6"
-      />
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">{service.title}</h1>
-      <p className="text-lg text-gray-700 leading-relaxed">{service.content}</p>
+  const Icon = service.icon;
 
-      <Link
-        to="/service"
-        className="inline-block mt-8 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-      >
-        ← Back to Services
-      </Link>
+  // Find portfolio items linked to this service
+  const relatedProjects = portfolioItems.filter((p) =>
+    service.portfolio.includes(p.id)
+  );
+
+  return (
+    <div className="max-w-5xl mx-auto p-6">
+      {/* Service Header */}
+      <div className="flex items-center space-x-4 mb-6">
+        {Icon && <Icon className="h-10 w-10 text-blue-600" />}
+        <h1 className="text-3xl font-bold">{service.title}</h1>
+      </div>
+
+      {/* Hero Image */}
+      {service.image && (
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-64 object-cover rounded-lg shadow mb-6"
+        />
+      )}
+
+      {/* Description */}
+      <p className="text-lg text-gray-700 mb-8">{service.description}</p>
+
+      {/* Related Portfolio Section */}
+      {relatedProjects.length > 0 && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            Related Portfolio Projects
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedProjects.map((project) => (
+              <Link
+                key={project.id}
+                to={`/portfolio/${project.id}`}
+                className="block bg-white rounded-lg shadow hover:shadow-lg transition"
+              >
+                <img
+                  src={project.images[0]}
+                  alt={project.title}
+                  className="h-40 w-full object-cover rounded-t-lg"
+                />
+                <div className="p-4">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <project.icon className="h-5 w-5 text-blue-600" />
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {project.title}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 text-sm">{project.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default ServiceDetail;
+}

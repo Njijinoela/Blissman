@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-import blissmanServices from "../data/ServiceData";
+import { blissmanServices } from "../data/ServiceData";
 
 const ServicesCarousel = () => {
   return (

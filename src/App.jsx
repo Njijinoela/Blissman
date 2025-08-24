@@ -11,6 +11,8 @@ import ServicesCarousel from "./pages/ServiceCarousel";
 import CallToAction from "./components/CallToAction";
 import QuoteWidget from "./components/QuoteWidget";
 import Products from "./components/Products";
+import PortfolioCarousel from "./pages/PortfolioCarousel";
+import PortfolioDetail from "./pages/PortfolioDetails";
 function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -24,6 +26,7 @@ function App() {
             element={
               <>
                 <Hero />
+                <PortfolioCarousel />
                 <ServicesCarousel />
                 <CallToAction />
               </>
@@ -32,6 +35,7 @@ function App() {
 
           {/* Separate pages */}
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio/:id" element={<PortfolioDetail />} />
           <Route path="/service" element={<Service />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />

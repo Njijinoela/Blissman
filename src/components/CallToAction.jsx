@@ -15,15 +15,23 @@ const CallToAction = () => {
           Partner with BlissMan for modern IT solutions, reliable support, and
           innovative strategies to keep your business ahead of the competition.
         </p>
-        <h3 className="text-2xl sm:text-2xl font-bold mb-4">
-          Get in touch 0711262396 /0780008352
+        <h3 className="text-2xl sm:text-2xl font-bold mb-6">
+          Get in touch: 0711 262396 / 0780 008352
         </h3>
+
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             to="/service"
             className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100 transition"
           >
             View Our Services
+          </Link>
+
+          <Link
+            to="/products"
+            className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100 transition"
+          >
+            View Our Products
           </Link>
         </div>
       </div>

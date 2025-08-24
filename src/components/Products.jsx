@@ -1,121 +1,158 @@
-import React from "react";
-import {
-  Wrench,
-  ShieldCheck,
-  Network,
-  Monitor,
-  Camera,
-  Code,
-  Printer,
-} from "lucide-react";
+import React, { useState } from "react";
+import { products } from "../data/product";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 
-const Products = () => {
-  const blissmanServices = [
-    {
-      icon: Wrench,
-      title: "Repair of Computers & Printers",
-      description:
-        "We diagnose hardware & software faults, remove malware & viruses, replace screens & much more.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Preventative Maintenance",
-      description:
-        "Monthly checks to prolong computer & printer life, improve performance, and ensure reliability.",
-    },
-    {
-      icon: Network,
-      title: "Structured Networking Solutions",
-      description:
-        "We design, sell, install, and support networks for SMEs & enterprises, plus cable management.",
-      extra: (
-        <ul className="list-disc list-inside text-sm mt-2 text-gray-600">
-          <li>Meraki</li>
-          <li>Ubiquiti</li>
-          <li>TP-Link</li>
-          <li>Cisco</li>
-          <li>Netgear</li>
-        </ul>
-      ),
-    },
-    {
-      icon: Monitor,
-      title: "Branded IT Products & Accessories",
-      description:
-        "We stock globally recognized brands — printers, PCs, monitors, servers, networking gear & more.",
-      extra: (
-        <ul className="list-disc list-inside text-sm mt-2 text-gray-600">
-          <li>Hp</li>
-          <li>Lenovo</li>
-          <li>Toshiba</li>
-          <li>Samsung</li>
-          <li>Dell</li>
-          <li>Huawei</li>
-        </ul>
-      ),
-    },
-    {
-      icon: Camera,
-      title: "Security Surveillance Hardware",
-      description:
-        "Installation of CCTV/IP cameras, access control & alarm systems, smoke & heat detectors.",
-    },
-    {
-      icon: Code,
-      title: "Software Solutions",
-      description:
-        "Custom software & trusted tools to support your business operations.",
-      extra: (
-        <ul className="list-disc list-inside text-sm mt-2 text-gray-600">
-          <li>QuickBooks</li>
-          <li>Antivirus</li>
-          <li>Office 365</li>
-        </ul>
-      ),
-    },
-    {
-      icon: Printer,
-      title: "Bulk Printing",
-      description:
-        "We print brochures, flyers, books, magazines, banners, calendars, branding items & more.",
-    },
-  ];
+const ProductsComponent = () => {
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+    setIsCartOpen(true); // open cart when adding an item
+  };
 
   return (
-    <section id="products" className="py-20 bg-gray-50">
+    <section id="products" className="py-20 bg-gray-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Our Services
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive IT solutions and services tailored to keep your
-            business running efficiently and securely.
-          </p>
+        {/* Header with Cart Button */}
+        <div className="flex justify-between items-center mb-12">
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+              Our Products
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl">
+              Explore our high-quality IT products, accessories, and solutions.
+            </p>
+          </div>
+
+          {/* Cart Button */}
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="relative bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+          >
+            <ShoppingCart className="h-6 w-6" />
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cart.length}
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Services grid */}
+        {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blissmanServices.map((service, index) => (
+          {products.map((product) => (
             <div
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              key={product.id}
+              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
             >
-              <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <service.icon className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {service.title}
+              <img
+                src={product.image}
+                alt={product.name}
+                className="h-40 w-full object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {product.name}
               </h3>
-              <p className="text-gray-600">{service.description}</p>
-              {service.extra}
+              <p className="text-gray-600 flex-1">{product.description}</p>
+              <p className="text-lg font-bold text-blue-600 mt-3">
+                ${product.price}
+              </p>
+              <p
+                className={`text-sm mt-1 ${
+                  product.availability === "In Stock"
+                    ? "text-green-600"
+                    : product.availability === "Limited Stock"
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }`}
+              >
+                {product.availability}
+              </p>
+              <button
+                disabled={product.availability === "Out of Stock"}
+                onClick={() => addToCart(product)}
+                className={`mt-4 py-2 px-4 rounded-lg transition ${
+                  product.availability === "Out of Stock"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 text-white hover:bg-blue-700"
+                }`}
+              >
+                {product.availability === "Out of Stock"
+                  ? "Unavailable"
+                  : "Add to Cart"}
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Cart Sidebar */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black z-[90]"
+              onClick={() => setIsCartOpen(false)}
+            />
+
+            {/* Sidebar */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 w-80 h-full bg-white shadow-xl z-[100] flex flex-col"
+            >
+              <div className="p-4 border-b flex justify-between items-center">
+                <h2 className="text-lg font-semibold">Your Cart</h2>
+                <button
+                  className="text-gray-600 hover:text-gray-900"
+                  onClick={() => setIsCartOpen(false)}
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-4">
+                {cart.length === 0 ? (
+                  <p className="text-gray-500">Your cart is empty.</p>
+                ) : (
+                  cart.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center mb-3 border-b pb-2"
+                    >
+                      <span className="text-sm">{item.name}</span>
+                      <span className="text-sm font-semibold">
+                        ${item.price}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="p-4 border-t">
+                <p className="font-bold text-gray-900">
+                  Total: $
+                  {cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
+                </p>
+                <button className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+                  Checkout
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
-export default Products;
+export default ProductsComponent;
