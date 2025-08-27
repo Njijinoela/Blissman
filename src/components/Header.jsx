@@ -91,50 +91,75 @@ const Header = () => {
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-              <Link
-                to="/"
-                className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Home
-              </Link>
-              <Link
-                to="/service"
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Services
-              </Link>
-              <Link
-                to="/portfolio"
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Portfolio
-              </Link>
-              <Link
-                to="/about"
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-              >
-                About
-              </Link>
-              <Link
-                to="/products"
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-              ></Link>
-              <HashLink
-                smooth
-                to="/about#contact"
-                className="w-full block text-left bg-blue-600 text-white px-3 py-2 text-base font-medium hover:bg-blue-700 transition-colors mt-4"
-              >
-                Contact Us
-              </HashLink>
-            </div>
-          </div>
-        )}
       </nav>
+
+      {/* Mobile Side Drawer Navigation */}
+      {/* Overlay */}
+      {isMenuOpen && (
+        <div
+          onClick={() => setIsMenuOpen(false)}
+          className="fixed inset-0  bg-opacity-50 z-40 md:hidden"
+        ></div>
+      )}
+
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 left-0 h-full w-60 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <nav className="flex flex-col h-full py-6">
+          <div className="flex-1 px-4 space-y-2">
+            <Link
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
+            >
+              Home
+            </Link>
+            <Link
+              to="/service"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
+            >
+              Services
+            </Link>
+            <Link
+              to="/portfolio"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
+            >
+              Portfolio
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
+            >
+              About
+            </Link>
+            <Link
+              to="/products"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
+            >
+              Products
+            </Link>
+          </div>
+
+          {/* Sticky footer link */}
+          <div className="px-4 pb-6">
+            <HashLink
+              smooth
+              to="/about#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full text-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition"
+            >
+              Contact Us
+            </HashLink>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 };
