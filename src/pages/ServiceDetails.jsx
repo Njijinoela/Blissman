@@ -1,7 +1,7 @@
-// src/pages/ServiceDetails.jsx
 import { useParams, Link } from "react-router-dom";
 import { blissmanServices } from "../data/ServiceData";
 import { portfolioItems } from "../data/PortfolioData";
+import FAQ from "../components/FAQ";
 
 export default function ServiceDetails() {
   const { id } = useParams();
@@ -70,6 +70,8 @@ export default function ServiceDetails() {
           </div>
         </div>
       )}
+      {/* FAQs Section */}
+      {service.faqs && service.faqs.length > 0 && <FAQ faqs={service.faqs} />}
     </div>
   );
 }

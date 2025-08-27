@@ -28,7 +28,6 @@ function App() {
                 <Hero />
                 <PortfolioCarousel />
                 <ServicesCarousel />
-                <CallToAction />
               </>
             }
           />
@@ -43,6 +42,7 @@ function App() {
         </Routes>
       </div>
       <QuoteWidget />
+      <CallToAction />
       <Footer />
     </div>
   );

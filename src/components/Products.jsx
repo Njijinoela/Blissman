@@ -108,29 +108,35 @@ const ProductsComponent = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 w-80 h-full bg-white shadow-xl z-[100] flex flex-col"
+              className="fixed top-0 right-0 w-80 h-full bg-white/70 backdrop-blur-md shadow-2xl z-[100] flex flex-col rounded-l-2xl"
             >
-              <div className="p-4 border-b flex justify-between items-center">
-                <h2 className="text-lg font-semibold">Your Cart</h2>
+              {/* Header */}
+              <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Your Cart
+                </h2>
                 <button
-                  className="text-gray-600 hover:text-gray-900"
+                  className="p-2 rounded-full hover:bg-gray-200 transition"
                   onClick={() => setIsCartOpen(false)}
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4">
+              {/* Items */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {cart.length === 0 ? (
                   <p className="text-gray-500">Your cart is empty.</p>
                 ) : (
                   cart.map((item, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center mb-3 border-b pb-2"
+                      className="flex justify-between items-center bg-white/60 backdrop-blur-sm rounded-lg p-3 shadow-sm"
                     >
-                      <span className="text-sm">{item.name}</span>
-                      <span className="text-sm font-semibold">
+                      <span className="text-sm font-medium text-gray-800">
+                        {item.name}
+                      </span>
+                      <span className="text-sm font-semibold text-blue-600">
                         ${item.price}
                       </span>
                     </div>
@@ -138,12 +144,13 @@ const ProductsComponent = () => {
                 )}
               </div>
 
-              <div className="p-4 border-t">
+              {/* Footer */}
+              <div className="p-4 border-t border-gray-200 bg-white/60 backdrop-blur-sm">
                 <p className="font-bold text-gray-900">
                   Total: $
                   {cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
                 </p>
-                <button className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+                <button className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition shadow-md">
                   Checkout
                 </button>
               </div>

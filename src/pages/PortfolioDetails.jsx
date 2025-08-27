@@ -1,5 +1,5 @@
-// src/pages/PortfolioDetail.jsx
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { portfolioItems } from "../data/PortfolioData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -11,6 +11,8 @@ export default function PortfolioDetail() {
   const { id } = useParams();
   const project = portfolioItems.find((p) => p.id === id);
 
+  const [openIndex, setOpenIndex] = useState(null);
+
   if (!project) {
     return (
       <h2 className="text-center text-xl mt-10">Portfolio item not found</h2>
@@ -18,6 +20,10 @@ export default function PortfolioDetail() {
   }
 
   const Icon = project.icon ? project.icon : null;
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -62,6 +68,37 @@ export default function PortfolioDetail() {
               <li key={i}>{item}</li>
             ))}
           </ul>
+        </div>
+      )}
+      {/* FAQ Section */}
+      {project.faqs && project.faqs.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold mb-6">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-4">
+            {project.faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition"
+              >
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full flex justify-between items-center p-4 text-left"
+                >
+                  <span className="font-medium text-gray-900">
+                    {faq.question}
+                  </span>
+                  <span className="text-xl">
+                    {openIndex === index ? "−" : "+"}
+                  </span>
+                </button>
+                {openIndex === index && (
+                  <div className="px-4 pb-4 text-gray-600">{faq.answer}</div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
