@@ -43,8 +43,7 @@ const About = () => {
     {
       name: "Emmanuel Okemwa",
       role: "CEO & Founder",
-      image:
-        "https://images.pexels.com/photos/3768911/pexels-photo-3768911.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1",
+      image: "/okemwa.jpeg",
     },
     {
       name: "Michael Chen",
@@ -53,10 +52,9 @@ const About = () => {
         "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1",
     },
     {
-      name: "Emily Rodriguez",
-      role: "Head of Support",
-      image:
-        "https://images.pexels.com/photos/3756681/pexels-photo-3756681.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1",
+      name: "Njiji Noel",
+      role: "Web Developer",
+      image: "/njiji.jpg",
     },
   ];
 
