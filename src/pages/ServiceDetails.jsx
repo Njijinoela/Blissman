@@ -31,7 +31,7 @@ export default function ServiceDetails() {
         <img
           src={service.image}
           alt={service.title}
-          className="w-full h-64 object-cover rounded-lg shadow mb-6"
+          className="w-full h-full object-cover rounded-lg shadow mb-6"
         />
       )}
 

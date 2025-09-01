@@ -48,7 +48,7 @@ export default function PortfolioDetail() {
                 <img
                   src={img}
                   alt={`${project.title} screenshot ${i + 1}`}
-                  className="w-full h-80 object-cover"
+                  className="w-full h-full object-cover"
                 />
               </SwiperSlide>
             ))}

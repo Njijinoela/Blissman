@@ -75,17 +75,12 @@ const Footer = () => {
             <h3 className="text-base font-semibold mb-2">Support</h3>
             <ul className="space-y-1 text-sm">
               <li>
-                <a href="#" className="hover:text-white">
+                <a href="/about#contact" className="hover:text-white">
                   Help Center
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
-                  Community Forum
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
+                <a href="https://www.youtube.com/" className="hover:text-white">
                   Tutorials
                 </a>
               </li>
@@ -102,7 +97,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <Mail size={14} className="text-blue-400 mr-2" />
-                <span>Blissmantech@gmail.com</span>
+                <span>
+                  <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">
+                    Blissmantech@gmail.com
+                  </a>
+                </span>
               </div>
               <div className="flex items-start">
                 <MapPin size={14} className="text-blue-400 mr-2 mt-0.5" />
