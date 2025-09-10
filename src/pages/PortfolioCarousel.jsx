@@ -43,7 +43,7 @@ const PortfolioCarousel = () => {
                   className="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
                 >
                   <img
-                    src={service.images[0]} // use first image from array
+                    src={service.images?.[0]} // use first image from array
                     alt={service.title}
                     className="h-40 w-full object-cover"
                   />
