@@ -1,3 +1,4 @@
+import { caption } from "framer-motion/client";
 import {
   Wrench,
   ShieldCheck,
@@ -84,7 +85,29 @@ export const portfolioItems = [
     description:
       "We design, sell, install, and support networks for SMEs & enterprises, plus cable management.",
     icon: Network,
-    images: ["/services/sns1.jpeg", "/services/sns2.jpeg"],
+    media: [
+      {
+        type: "image",
+        src: "/projects/starlinkinstallation.jpeg",
+        caption: "Mounted StaRlink Project.",
+      },
+      {
+        type: "image",
+        src: "/projects/starlinkinstallation2.jpeg",
+        caption: "Front-View Of The Starlink Project Installation.",
+      },
+      {
+        type: "video",
+        src: "/projects/starlinkvideo2.mp4",
+        caption:
+          "Video Demo of the process of installation and mounting by our Team.",
+      },
+      {
+        type: "video",
+        src: "/projects/starlinkvideo.mp4",
+        caption: "Installation Process by our Team one of our works.",
+      },
+    ],
     extra: ["Meraki", "Ubiquiti", "TP-Link", "Cisco", "Netgear"],
     faqs: [
       {
