@@ -85,6 +85,7 @@ export const portfolioItems = [
     description:
       "We design, sell, install, and support networks for SMEs & enterprises, plus cable management.",
     icon: Network,
+    images: ["/services/sns1.jpeg"],
     media: [
       {
         type: "image",

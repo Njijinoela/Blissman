@@ -52,7 +52,7 @@ export default function ServiceDetails() {
                 className="block bg-white rounded-lg shadow hover:shadow-lg transition"
               >
                 <img
-                  src={project.images[0]}
+                  src={project.images?.[0]}
                   alt={project.title}
                   className="h-40 w-full object-cover rounded-t-lg"
                 />
