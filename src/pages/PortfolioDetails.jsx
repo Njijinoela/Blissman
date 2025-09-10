@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { portfolioItems } from "../data/PortfolioData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -12,6 +12,8 @@ export default function PortfolioDetail() {
   const project = portfolioItems.find((p) => p.id === id);
 
   const [openIndex, setOpenIndex] = useState(null);
+  const swiperRef = useRef(null);
+  const videoRefs = useRef([]); // store video elements
 
   if (!project) {
     return (
@@ -25,31 +27,72 @@ export default function PortfolioDetail() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // When slide changes → play video if it's a video slide, pause others
+  const handleSlideChange = (swiper) => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      if (i === swiper.activeIndex) {
+        video.play().catch(() => {}); // autoplay
+      } else {
+        video.pause();
+        video.currentTime = 0; // reset
+      }
+    });
+  };
+
+  // When video ends → move to next slide
+  const handleVideoEnd = (index) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-6">
       {/* Project Title + Icon */}
       <div className="flex items-center space-x-4 mb-6">
         {Icon && <Icon className="h-10 w-10 text-blue-600" />}
         <h1 className="text-3xl font-bold">{project.title}</h1>
       </div>
 
-      {/* Image Carousel */}
-      {project.images && project.images.length > 0 && (
+      {/* Media Carousel */}
+      {project.media && project.media.length > 0 && (
         <div className="mb-8">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation
             pagination={{ clickable: true }}
             spaceBetween={20}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onSlideChange={handleSlideChange}
             className="rounded-xl overflow-hidden shadow-lg"
           >
-            {project.images.map((img, i) => (
-              <SwiperSlide key={i}>
-                <img
-                  src={img}
-                  alt={`${project.title} screenshot ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
+            {project.media.map((item, i) => (
+              <SwiperSlide key={i} className="flex items-center justify-center">
+                {item.type === "image" ? (
+                  <img
+                    src={item.src}
+                    alt={`${project.title} media ${i + 1}`}
+                    className="w-full h-auto max-h-[70vh] object-contain"
+                  />
+                ) : (
+                  <video
+                    ref={(el) => (videoRefs.current[i] = el)}
+                    muted
+                    playsInline
+                    onEnded={() => handleVideoEnd(i)}
+                    className="w-full h-auto max-h-[70vh] object-contain rounded-xl"
+                  >
+                    <source src={item.src} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+                {/* Media caption */}
+                {item.caption && (
+                  <div className="absolute bottom-1 left-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white text-lg p-3 text-center">
+                    {item.caption}
+                  </div>
+                )}
               </SwiperSlide>
             ))}
           </Swiper>
@@ -70,6 +113,7 @@ export default function PortfolioDetail() {
           </ul>
         </div>
       )}
+
       {/* FAQ Section */}
       {project.faqs && project.faqs.length > 0 && (
         <div className="mt-12">

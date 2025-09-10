@@ -8,7 +8,10 @@ import {
   Mail,
   MapPin,
   Send,
+  X,
 } from "lucide-react";
+
+import teamData from "../data/teamData";
 
 const About = () => {
   // Contact form state
@@ -18,6 +21,8 @@ const About = () => {
     subject: "",
     message: "",
   });
+
+  const [selectedMember, setSelectedMember] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -39,31 +44,13 @@ const About = () => {
     { icon: Globe, number: "5+", label: "Countries Served" },
   ];
 
-  const team = [
-    {
-      name: "Emmanuel Okemwa",
-      role: "CEO & Founder",
-      image: "/okemwa.jpeg",
-    },
-    {
-      name: "Michael Chen",
-      role: "CTO",
-      image:
-        "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1",
-    },
-    {
-      name: "Njiji Noel",
-      role: "Web Developer",
-      image: "/njiji.jpg",
-    },
-  ];
-
   return (
     <>
       {/* About Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+            {/* Left content */}
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
                 Trusted Technology Partner Since 2019
@@ -116,6 +103,7 @@ const About = () => {
               </div>
             </div>
 
+            {/* Right content */}
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
               <h3 className="text-2xl font-bold mb-6">Why Choose Blissman?</h3>
               <ul className="space-y-4 list-disc pl-6">
@@ -172,8 +160,12 @@ const About = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {team.map((member, index) => (
-                <div key={index} className="text-center">
+              {teamData.map((member, index) => (
+                <div
+                  key={index}
+                  className="text-center cursor-pointer hover:scale-105 transition"
+                  onClick={() => setSelectedMember(member)}
+                >
                   <img
                     src={member.image}
                     alt={member.name}
@@ -189,6 +181,53 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      {/* Member Modal */}
+      {selectedMember && (
+        <div
+          className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedMember(null)}
+        >
+          <div
+            className="bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-white-800"
+              onClick={() => setSelectedMember(null)}
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center">
+              <img
+                src={selectedMember.image}
+                alt={selectedMember.name}
+                className="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-4"
+              />
+              <h3 className="text-2xl font-bold text-white">
+                {selectedMember.name}
+              </h3>
+              <p className="text-white mb-4">{selectedMember.role}</p>
+
+              <p className="text-white mb-4">{selectedMember.bio}</p>
+
+              <h4 className="text-lg font-semibold text-white mb-2">Skills</h4>
+              <ul className="flex flex-wrap justify-center gap-2">
+                {selectedMember.skills.map((skill, idx) => (
+                  <li
+                    key={idx}
+                    className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                  >
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-50">
