@@ -10,6 +10,7 @@ import {
   Send,
   X,
 } from "lucide-react";
+import { FaLinkedin } from "react-icons/fa";
 
 import teamData from "../data/teamData";
 
@@ -38,10 +39,10 @@ const About = () => {
 
   // About data
   const stats = [
-    { icon: Users, number: "10,000+", label: "Happy Customers" },
-    { icon: Award, number: "15+", label: "Years Experience" },
+    { icon: Users, number: "1,000+", label: "Happy Customers" },
+    { icon: Award, number: "7+", label: "Years Experience" },
     { icon: Clock, number: "99.9%", label: "Uptime Record" },
-    { icon: Globe, number: "5+", label: "Countries Served" },
+    { icon: Globe, number: "3+", label: "Countries Served" },
   ];
 
   return (
@@ -151,7 +152,7 @@ const About = () => {
           {/* Team Section */}
           <div className="text-center">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Meet Our Leadership Team
+              Meet Our Powerful Team
             </h3>
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
               Our experienced team brings together expertise in hosting, cloud
@@ -166,11 +167,17 @@ const About = () => {
                   className="text-center cursor-pointer hover:scale-105 transition"
                   onClick={() => setSelectedMember(member)}
                 >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg mb-4"
-                  />
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg mb-4"
+                    />
+                  ) : (
+                    <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 flex items-center justify-center shadow-lg mb-4">
+                      <span className="text-gray-500">No Image</span>
+                    </div>
+                  )}
                   <h4 className="text-xl font-semibold text-gray-900 mb-1">
                     {member.name}
                   </h4>
@@ -201,15 +208,37 @@ const About = () => {
             </button>
 
             <div className="text-center">
-              <img
-                src={selectedMember.image}
-                alt={selectedMember.name}
-                className="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-4"
-              />
+              {selectedMember.image ? (
+                <img
+                  src={selectedMember.image}
+                  alt={selectedMember.name}
+                  className="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-4"
+                />
+              ) : (
+                <div className="w-28 h-28 rounded-full mx-auto bg-gray-200 flex items-center justify-center shadow-md mb-4">
+                  <span className="text-gray-500">No Image</span>
+                </div>
+              )}
               <h3 className="text-2xl font-bold text-white">
                 {selectedMember.name}
               </h3>
               <p className="text-white mb-4">{selectedMember.role}</p>
+
+              {selectedMember.social && selectedMember.social.length > 0 && (
+                <div className="flex justify-center gap-4 mb-4">
+                  {selectedMember.social.map((social, idx) => (
+                    <a
+                      key={idx}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-600 underline"
+                    >
+                      {social.platform}
+                    </a>
+                  ))}
+                </div>
+              )}
 
               <p className="text-white mb-4">{selectedMember.bio}</p>
 
@@ -294,6 +323,24 @@ const About = () => {
                         Plums Lane off Ojijo Road IBC Center
                       </p>
                       <p className="text-gray-600">Westlands, Nairobi Kenya</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="bg-blue-50 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+                      <FaLinkedin className="h-6 w-6 text-blue-700" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        Connect with Us
+                      </h4>
+                      <a
+                        href="https://www.linkedin.com/company/blissman-technologies-ltd/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        LinkedIn Profile
+                      </a>
                     </div>
                   </div>
                 </div>
