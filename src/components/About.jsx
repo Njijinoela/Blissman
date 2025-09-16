@@ -196,7 +196,7 @@ const About = () => {
           onClick={() => setSelectedMember(null)}
         >
           <div
-            className="bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6 relative"
+            className="bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
