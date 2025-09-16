@@ -77,6 +77,10 @@ const teamData = [
         platform: "LinkedIn",
         url: "https://www.linkedin.com/in/njiji-noel-7541b717b/",
       },
+      {
+        platform: "Github",
+        url: "https://github.com/Njijinoela",
+      },
     ],
     bio: "Passionate software Developer with expertise in full-stack web development,dedicated to crafting clean, efficient code and solving complex problems. Adept at creating seamless user experiences through innovative solutions. Equipped with intensive bootcamp training, I thrive in collaborative environments and adapt quickly to new technologies. Committed to building applications that enhance user engagement and drive measurable business growth.",
     skills: [
