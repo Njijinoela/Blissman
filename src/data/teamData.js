@@ -39,8 +39,8 @@ const teamData = [
   {
     name: "Nancy Kemunto Okenagwa",
     role: "Communication Executive",
-    image: "",
-    bio: "An impact-driven communications specialist with over 10 years of cross-sector experience leading high-impact advocacy, public affairs, and digital campaigns across global health, gender equity and media sectors. Demonstrated success in brand development, message strategy, stakeholder engagement, and media relations, including global recognition through The Lancet Oncology and the World Cancer Day Campaign Awards. Proven ability to lead cross-functional teams, shape compelling narratives on complex policy issues, and execute integrated communication strategies that elevate visibility, build brand equity, and drive political action. Adept in coalition-based advocacy, content creation, digital strategy, and campaign leadership -bringing a bold, adaptive, and mission-driven approach to tackling global challenges through communications.",
+    image: "/team/Nancy.jpeg",
+    bio: "A communications strategist with 10+ years’ experience driving advocacy, brand visibility, and public affairs across global health, gender equity, and media. Recognized for her award-winning campaigns, she excels at shaping powerful narratives, leading coalitions, and positioning organizations as leaders in their fields.",
     skills: [
       "Content Creation & Storytelling",
       "Social Media Strategy & Digital Engagement",
