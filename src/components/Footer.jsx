@@ -75,9 +75,9 @@ const Footer = () => {
             <h3 className="text-base font-semibold mb-2">Support</h3>
             <ul className="space-y-1 text-sm">
               <li>
-                <a href="/about#contact" className="hover:text-white">
+                <Link to="/about#contact" className="hover:text-white">
                   Help Center
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="https://www.youtube.com/" className="hover:text-white">
