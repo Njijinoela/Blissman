@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { portfolioItems } from "../data/PortfolioData";
 
@@ -25,7 +26,10 @@ const PortfolioCarousel = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={20}
           slidesPerView={1}
-          navigation
+          navigation={{
+            nextEl: ".custom-next",
+            prevEl: ".custom-prev",
+          }}
           pagination={{ clickable: true }}
           autoplay={{ delay: 4000 }}
           breakpoints={{
@@ -35,7 +39,7 @@ const PortfolioCarousel = () => {
           }}
         >
           {portfolioItems.map((service) => {
-            const Icon = service.icon; //  Extract component
+            const Icon = service.icon;
             return (
               <SwiperSlide key={service.id}>
                 <Link
@@ -43,14 +47,13 @@ const PortfolioCarousel = () => {
                   className="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
                 >
                   <img
-                    src={service.images?.[0]} // use first image from array
+                    src={service.images?.[0]}
                     alt={service.title}
                     className="h-40 w-full object-cover"
                   />
                   <div className="p-6">
                     <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                       <Icon className="h-6 w-6 text-blue-600" />{" "}
-                      {/*  Works now */}
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {service.title}
