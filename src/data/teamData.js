@@ -17,7 +17,7 @@ const teamData = [
     name: "Leah Obwocha",
     role: "Head Technical Team",
     image: "/team/leah.jpeg",
-    bio: "a highly zealous, self-driven and committed recent Bachelor of Technology in Computer Technology graduate",
+    bio: "Leah Obwocha is a Computer Technology graduate from the Technical University of Kenya with skills in databases, machine learning, web and mobile application design, and data analysis. She has hands-on ICT support experience, is a winner of the CyberGirls Linux Party 2023 CTF challenge, and actively participates in tech and community initiatives.",
     skills: [
       "Database",
       "Machine learning",
