@@ -1,8 +1,59 @@
 import React, { useState } from "react";
 import { MessageSquare, X } from "lucide-react";
+import emailjs from "emailjs-com";
 
 const QuoteWidget = () => {
   const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    service: "Website Design",
+    message: "",
+  });
+
+  // handle input changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          service: formData.service,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          alert("Quote request sent! ✅");
+          setFormData({
+            name: "",
+            email: "",
+            service: "Website Design",
+            message: "",
+          });
+          setLoading(false);
+          setExpanded(false); // close widget after success
+        },
+        (error) => {
+          console.error(error.text);
+          alert("Failed to send quote. Please try again.");
+          setLoading(false);
+        }
+      );
+  };
 
   return (
     <div className="fixed bottom-4 left-4 z-50">
@@ -31,13 +82,17 @@ const QuoteWidget = () => {
 
           {/* Form */}
           <div className="p-4">
-            <form className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Name
                 </label>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   placeholder="Your full name"
                 />
@@ -48,6 +103,10 @@ const QuoteWidget = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   placeholder="you@example.com"
                 />
@@ -56,7 +115,13 @@ const QuoteWidget = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Service
                 </label>
-                <select className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <select
+                  name="service"
+                  value={formData.service}
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
                   <option>Website Design</option>
                   <option>IT Support</option>
                   <option>IT Consulting</option>
@@ -71,6 +136,10 @@ const QuoteWidget = () => {
                   Message
                 </label>
                 <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                   rows="3"
                   className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
                   placeholder="Tell us about your project..."
@@ -79,9 +148,14 @@ const QuoteWidget = () => {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition"
+                disabled={loading}
+                className={`w-full py-2 px-4 rounded-md text-sm font-medium transition ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 text-white hover:bg-blue-700"
+                }`}
               >
-                Submit Request
+                {loading ? "Sending..." : "Submit Request"}
               </button>
             </form>
           </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { products } from "../data/product";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Truck, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductsComponent = () => {
   const [cart, setCart] = useState([]);
@@ -19,6 +20,12 @@ const ProductsComponent = () => {
     setCart([...cart, product]);
     setIsCartOpen(true);
   };
+
+  const removeFromCart = (index) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
+  const navigate = useNavigate();
 
   return (
     <section id="products" className="py-20 bg-gray-50 relative">
@@ -186,12 +193,21 @@ const ProductsComponent = () => {
                       key={index}
                       className="flex justify-between items-center bg-white/60 backdrop-blur-sm rounded-lg p-3 shadow-sm"
                     >
-                      <span className="text-sm font-medium text-gray-800">
-                        {item.name}
-                      </span>
-                      <span className="text-sm font-semibold text-blue-600">
-                        {formatPrice(item.price)}
-                      </span>
+                      <div>
+                        <span className="text-sm font-medium text-gray-800">
+                          {item.name}
+                        </span>
+                        <span className="text-sm font-semibold text-blue-600">
+                          {formatPrice(item.price)}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => removeFromCart(index)}
+                        className="text-red-600 hover:text-red-800 ml-2"
+                        aria-label="Remove item"
+                      >
+                        x
+                      </button>
                     </div>
                   ))
                 )}
@@ -203,7 +219,10 @@ const ProductsComponent = () => {
                   Total:{" "}
                   {formatPrice(cart.reduce((sum, item) => sum + item.price, 0))}
                 </p>
-                <button className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition shadow-md">
+                <button
+                  onClick={() => navigate("/checkout", { state: { cart } })}
+                  className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition shadow-md"
+                >
                   Checkout
                 </button>
               </div>
