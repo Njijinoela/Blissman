@@ -13,6 +13,7 @@ import QuoteWidget from "./components/QuoteWidget";
 import Products from "./components/Products";
 import PortfolioCarousel from "./pages/PortfolioCarousel";
 import PortfolioDetail from "./pages/PortfolioDetails";
+import CheckoutPage from "./components/CheckoutPage";
 function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -39,6 +40,7 @@ function App() {
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </div>
       <QuoteWidget />
