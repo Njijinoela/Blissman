@@ -6,8 +6,9 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const cart = location.state?.cart || [];
 
-  const [paymentMethod, setPaymentMethod] = useState("mpesa");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-KE", {
@@ -16,17 +17,51 @@ const CheckoutPage = () => {
       minimumFractionDigits: 0,
     }).format(price);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (paymentMethod === "mpesa" && !phone) {
-      alert("Please enter your M-Pesa phone number before placing order.");
+    if (!phone || !email) {
+      alert("⚠️ Please fill in both phone number and email.");
       return;
     }
 
-    alert("✅ Your order has been placed successfully!");
+    if (!/^07\d{8}$/.test(phone)) {
+      alert("⚠️ Enter a valid M-Pesa phone number (e.g., 07XX XXX XXX)");
+      return;
+    }
 
-    navigate("/products");
+    const orderDetails = {
+      phone,
+      email,
+      items: cart.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity || 1,
+      })),
+    };
+
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/orders/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        alert("❌ Failed: " + errorData.error);
+        return;
+      }
+
+      const data = await res.json();
+      alert(`✅ Order #${data.order_id} placed! Total: KES ${data.total}`);
+      navigate("/products");
+    } catch (error) {
+      console.error("Order error:", error);
+      alert(`❌ ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,41 +96,37 @@ const CheckoutPage = () => {
       {/* Checkout Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Payment Method
-          </label>
-          <select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
+          <label className="block text-sm font-medium mb-1">Phone Number</label>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="07XX XXX XXX"
             className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="mpesa">M-Pesa</option>
-            <option value="card">Credit/Debit Card</option>
-            <option value="cash">Cash on Delivery</option>
-          </select>
+            required
+          />
         </div>
 
-        {/* Only show phone input if Mpesa */}
-        {paymentMethod === "mpesa" && (
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              M-Pesa Phone Number
-            </label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="07XX XXX XXX"
-              className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-          </div>
-        )}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Email Address
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@email.com"
+            className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
         >
-          Place Order
+          {loading ? "Placing Order..." : "Place Order"}
         </button>
       </form>
     </div>

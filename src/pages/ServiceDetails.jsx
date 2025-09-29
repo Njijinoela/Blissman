@@ -1,44 +1,65 @@
 import { useParams, Link } from "react-router-dom";
-import { blissmanServices } from "../data/ServiceData";
+import { useEffect, useState } from "react";
 import { portfolioItems } from "../data/PortfolioData";
 import FAQ from "../components/FAQ";
 
+import {
+  Palette,
+  ShieldCheck,
+  Network,
+  FileText,
+  Laptop,
+  Wrench,
+  Globe,
+} from "lucide-react";
+const iconMap = {
+  Palette,
+  ShieldCheck,
+  Network,
+  FileText,
+  Laptop,
+  Wrench,
+  Globe,
+};
+
 export default function ServiceDetails() {
   const { id } = useParams();
-  const service = blissmanServices.find((s) => s.id === id);
+  const [service, setService] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/services/${id}`)
+      .then((res) => res.json())
+      .then((data) => setService(data))
+      .catch((err) => console.error("Error fetching service:", err));
+  }, [id]);
 
   if (!service) {
-    return <h2 className="text-center text-xl mt-10">Service not found</h2>;
+    return <h2 className="text-center text-xl mt-10">Loading...</h2>;
   }
 
-  const Icon = service.icon;
+  const Icon = iconMap[service.icon] || Globe;
 
-  // Find portfolio items linked to this service
   const relatedProjects = portfolioItems.filter((p) =>
-    service.portfolio.includes(p.id)
+    service.portfolio?.includes(p.id)
   );
 
   return (
     <div className="max-w-5xl mx-auto p-6">
-      {/* Service Header */}
       <div className="flex items-center space-x-4 mb-6">
-        {Icon && <Icon className="h-10 w-10 text-blue-600" />}
+        <Icon className="h-10 w-10 text-blue-600" />
         <h1 className="text-3xl font-bold">{service.title}</h1>
       </div>
 
-      {/* Hero Image */}
-      {service.image && (
+      {service.image_url && (
         <img
-          src={service.image}
+          src={service.image_url}
           alt={service.title}
           className="w-full h-full object-cover rounded-lg shadow mb-6"
         />
       )}
 
-      {/* Description */}
       <p className="text-lg text-gray-700 mb-8">{service.description}</p>
 
-      {/* Related Portfolio Section */}
       {relatedProjects.length > 0 && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">
@@ -57,12 +78,9 @@ export default function ServiceDetails() {
                   className="h-40 w-full object-cover rounded-t-lg"
                 />
                 <div className="p-4">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <project.icon className="h-5 w-5 text-blue-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {project.title}
-                    </h3>
-                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {project.title}
+                  </h3>
                   <p className="text-gray-600 text-sm">{project.description}</p>
                 </div>
               </Link>
@@ -70,8 +88,8 @@ export default function ServiceDetails() {
           </div>
         </div>
       )}
-      {/* FAQs Section */}
-      {service.faqs && service.faqs.length > 0 && <FAQ faqs={service.faqs} />}
+
+      {service.faqs?.length > 0 && <FAQ faqs={service.faqs} />}
     </div>
   );
 }

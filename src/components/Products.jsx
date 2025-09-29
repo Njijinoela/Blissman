@@ -1,13 +1,33 @@
-import React, { useState } from "react";
-import { products } from "../data/product";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Truck, Phone } from "lucide-react";
+import { ShoppingCart, Truck, Phone, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ProductsComponent = () => {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/products/");
+        if (!res.ok) throw new Error("Failed to fetch products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const formatPrice = (price) =>
     new Intl.NumberFormat("en-KE", {
@@ -25,13 +45,24 @@ const ProductsComponent = () => {
     setCart(cart.filter((_, i) => i !== index));
   };
 
-  const navigate = useNavigate();
+  const availabilityColor = (status) => {
+    switch (status) {
+      case "In Stock":
+        return "text-green-600";
+      case "Limited Stock":
+        return "text-yellow-600";
+      case "Out of Stock":
+        return "text-red-600";
+      default:
+        return "text-gray-600";
+    }
+  };
 
   return (
     <section id="products" className="py-20 bg-gray-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Cart Button */}
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
               Our Products
@@ -41,15 +72,14 @@ const ProductsComponent = () => {
             </p>
           </div>
 
-          {/* Cart Button */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+            className="relative p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700"
             aria-label="Open cart"
           >
             <ShoppingCart className="h-6 w-6" />
             {cart.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center rounded-full">
                 {cart.length}
               </span>
             )}
@@ -91,74 +121,65 @@ const ProductsComponent = () => {
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
-            >
+        {/* Products Grid */}
+        {loading ? (
+          <p>Loading products...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
               <div
-                onClick={() => setSelectedProduct(product)}
-                className="cursor-pointer flex-1"
+                key={product.id}
+                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
               >
-                <img
-                  src={product.image}
-                  alt={`${product.name} product image`}
-                  className="h-48 w-full object-contain rounded-lg mb-4 bg-gray-50"
-                />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {product.name}
-                </h3>
-                <p className="text-gray-600">{product.description}</p>
-                <p className="text-lg font-bold text-blue-600 mt-3">
-                  {formatPrice(product.price)}
-                </p>
-                <p
-                  className={`text-sm mt-1 ${
-                    product.availability === "In Stock"
-                      ? "text-green-600"
-                      : product.availability === "Limited Stock"
-                      ? "text-yellow-600"
-                      : "text-red-600"
-                  }`}
+                <div
+                  onClick={() => setSelectedProduct(product)}
+                  className="cursor-pointer flex-1"
                 >
-                  {product.availability}
-                </p>
+                  <img
+                    src={product.image_url || "/placeholder.png"}
+                    alt={product.name}
+                    className="h-48 w-full object-contain rounded-lg mb-4 bg-gray-50"
+                  />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-600">{product.description}</p>
+                  <p className="text-lg font-bold text-blue-600 mt-3">
+                    {formatPrice(product.price)}
+                  </p>
+                  <p
+                    className={`text-sm mt-1 ${availabilityColor(
+                      product.availability
+                    )}`}
+                  >
+                    {product.availability}
+                  </p>
+                </div>
+                <button
+                  onClick={() => addToCart(product)}
+                  className="mt-4 py-2 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+                  disabled={product.availability === "Out of Stock"}
+                >
+                  Add to Cart
+                </button>
               </div>
-              {/* Quick Add Button */}
-              <button
-                disabled={product.availability === "Out of Stock"}
-                onClick={() => addToCart(product)}
-                className={`mt-4 py-2 px-4 rounded-lg transition ${
-                  product.availability === "Out of Stock"
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-              >
-                {product.availability === "Out of Stock"
-                  ? "Unavailable"
-                  : "Quick Add"}
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Cart Sidebar */}
       <AnimatePresence>
         {isCartOpen && (
           <>
-            {/* Overlay */}
             <motion.div
+              className="fixed inset-0 bg-black z-[90]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-[90]"
               onClick={() => setIsCartOpen(false)}
             />
-
             {/* Sidebar */}
             <motion.div
               initial={{ x: "100%" }}
@@ -169,21 +190,12 @@ const ProductsComponent = () => {
               role="dialog"
               aria-modal="true"
             >
-              {/* Header */}
               <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Your Cart
-                </h2>
-                <button
-                  className="p-2 rounded-full hover:bg-gray-200 transition"
-                  onClick={() => setIsCartOpen(false)}
-                  aria-label="Close cart"
-                >
-                  ✕
+                <h2 className="text-xl font-bold">Your Cart</h2>
+                <button onClick={() => setIsCartOpen(false)}>
+                  <X className="h-6 w-6 text-gray-600" />
                 </button>
               </div>
-
-              {/* Items */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {cart.length === 0 ? (
                   <p className="text-gray-500">Your cart is empty.</p>
@@ -191,7 +203,7 @@ const ProductsComponent = () => {
                   cart.map((item, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center bg-white/60 backdrop-blur-sm rounded-lg p-3 shadow-sm"
+                      className="flex justify-between items-center mb-4 bg-white/60 backdrop-blur-sm rounded-lg p-3 shadow-sm"
                     >
                       <div>
                         <span className="text-sm font-medium text-gray-800">
@@ -212,40 +224,50 @@ const ProductsComponent = () => {
                   ))
                 )}
               </div>
-
-              {/* Footer */}
-              <div className="p-4 border-t border-gray-200 bg-white/60 backdrop-blur-sm">
-                <p className="font-bold text-gray-900">
-                  Total:{" "}
-                  {formatPrice(cart.reduce((sum, item) => sum + item.price, 0))}
-                </p>
-                <button
-                  onClick={() => navigate("/checkout", { state: { cart } })}
-                  className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition shadow-md"
-                >
-                  Checkout
-                </button>
-              </div>
+              {cart.length > 0 && (
+                <div className="p-4 border-t border-gray-200 bg-white/60 backdrop-blur-sm">
+                  <p className="font-bold text-gray-900">
+                    Total:{" "}
+                    {formatPrice(
+                      cart.reduce((sum, item) => sum + item.price, 0)
+                    )}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsCartOpen(false);
+                      navigate("/checkout", {
+                        state: {
+                          cart,
+                          total: cart.reduce(
+                            (sum, item) => sum + item.price,
+                            0
+                          ),
+                        },
+                      });
+                    }}
+                    className="w-full bg-blue-600 text-white py-2 rounded-lg mt-3 hover:bg-blue-700 transition shadow-md"
+                  >
+                    Checkout
+                  </button>
+                </div>
+              )}
             </motion.div>
           </>
         )}
       </AnimatePresence>
 
-      {/* Product Details Modal */}
+      {/* Product Modal */}
       <AnimatePresence>
         {selectedProduct && (
           <>
-            {/* Overlay */}
             <motion.div
+              className="fixed inset-0 bg-black z-[90]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-[90]"
               onClick={() => setSelectedProduct(null)}
             />
-
-            {/* Modal */}
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -255,7 +277,6 @@ const ProductsComponent = () => {
               role="dialog"
               aria-modal="true"
             >
-              {/* Header */}
               <div className="p-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-800">
                   {selectedProduct.name}
@@ -268,100 +289,62 @@ const ProductsComponent = () => {
                   ✕
                 </button>
               </div>
-
-              {/* Content */}
               <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Image */}
                 <img
-                  src={selectedProduct.image}
-                  alt={`${selectedProduct.name} detailed view`}
-                  className="w-full h-80  object-contain rounded-lg bg-gray-50"
+                  src={selectedProduct.image_url || "/placeholder.png"}
+                  alt={selectedProduct.name}
+                  className="w-full h-80 object-contain bg-gray-50 rounded-lg"
                 />
-
-                {/* Details */}
                 <div>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {selectedProduct.name}
+                  </h3>
+                  <p className="text-lg font-semibold text-blue-600 mb-2">
+                    {formatPrice(selectedProduct.price)}
+                  </p>
+                  <p
+                    className={`mb-2 font-semibold ${availabilityColor(
+                      selectedProduct.availability
+                    )}`}
+                  >
+                    {selectedProduct.availability}
+                  </p>
                   <p className="text-gray-600 mb-4">
                     {selectedProduct.description}
                   </p>
-
-                  {/* Specs */}
+                  <p className="text-sm text-gray-500 mb-2">
+                    Warranty: {selectedProduct.warranty}
+                  </p>
                   {selectedProduct.specs && (
                     <div className="mb-4">
-                      <h3 className="font-semibold text-gray-800 mb-2">
-                        Specifications:
-                      </h3>
-                      <ul className="list-disc list-inside text-gray-600 space-y-1">
+                      <h4 className="font-semibold">Specifications:</h4>
+                      <ul className="list-disc pl-5 text-gray-600 text-sm">
                         {Object.entries(selectedProduct.specs).map(
-                          ([key, value]) => (
-                            <li key={key}>
-                              <span className="font-medium capitalize">
-                                {key}:
-                              </span>{" "}
-                              {value}
+                          ([key, value], i) => (
+                            <li key={i}>
+                              {key}: {value}
                             </li>
                           )
                         )}
                       </ul>
                     </div>
                   )}
-
-                  {/* Features */}
                   {selectedProduct.features && (
-                    <div className="mb-4">
-                      <h3 className="font-semibold text-gray-800 mb-2">
-                        Key Features:
-                      </h3>
-                      <ul className="list-disc list-inside text-gray-600 space-y-1">
-                        {selectedProduct.features.map((feature, index) => (
-                          <li key={index}>{feature}</li>
+                    <div>
+                      <h4 className="font-semibold">Features:</h4>
+                      <ul className="list-disc pl-5 text-gray-600 text-sm">
+                        {selectedProduct.features.map((f, i) => (
+                          <li key={i}>{f}</li>
                         ))}
                       </ul>
                     </div>
                   )}
-
-                  {/* Warranty */}
-                  {selectedProduct.warranty && (
-                    <p className="text-sm text-gray-700 mb-4">
-                      <span className="font-semibold">Warranty:</span>{" "}
-                      {selectedProduct.warranty}
-                    </p>
-                  )}
-
-                  <p className="text-lg font-bold text-blue-600 mb-2">
-                    {formatPrice(selectedProduct.price)}
-                  </p>
-                  <p
-                    className={`text-sm mb-4 ${
-                      selectedProduct.availability === "In Stock"
-                        ? "text-green-600"
-                        : selectedProduct.availability === "Limited Stock"
-                        ? "text-yellow-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {selectedProduct.availability}
-                  </p>
-                  <button
-                    disabled={selectedProduct.availability === "Out of Stock"}
-                    onClick={() => addToCart(selectedProduct)}
-                    className={`mt-4 w-full py-2 px-4 rounded-lg transition ${
-                      selectedProduct.availability === "Out of Stock"
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
-                  >
-                    {selectedProduct.availability === "Out of Stock"
-                      ? "Unavailable"
-                      : "Add to Cart"}
-                  </button>
                 </div>
               </div>
 
               {/* Related Products */}
               <div className="p-6 border-t border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  Related Products
-                </h3>
+                <h4 className="text-lg font-semibold mb-4">Related Products</h4>
                 <div className="flex gap-4 overflow-x-auto pb-4">
                   {products
                     .filter(
@@ -369,23 +352,20 @@ const ProductsComponent = () => {
                         p.category === selectedProduct.category &&
                         p.id !== selectedProduct.id
                     )
-                    .slice(0, 4)
+                    .slice(0, 3)
                     .map((related) => (
                       <div
                         key={related.id}
-                        onClick={() => setSelectedProduct(related)}
                         className="min-w-[200px] bg-white rounded-lg shadow-md hover:shadow-lg transition cursor-pointer p-4 flex-shrink-0"
+                        onClick={() => setSelectedProduct(related)}
                       >
                         <img
-                          src={related.image}
-                          alt={`${related.name} related product`}
+                          src={related.image_url || "/placeholder.png"}
+                          alt={related.name}
                           className="h-36 w-full object-contain rounded-md mb-2 bg-gray-50"
                         />
-                        <h4 className="text-sm font-semibold text-gray-800">
+                        <p className="text-sm font-semibold text-gray-800">
                           {related.name}
-                        </h4>
-                        <p className="text-xs text-gray-600 mb-1 line-clamp-2">
-                          {related.description}
                         </p>
                         <p className="text-sm font-bold text-blue-600">
                           {formatPrice(related.price)}

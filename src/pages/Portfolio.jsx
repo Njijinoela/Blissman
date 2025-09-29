@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { portfolioItems } from "../data/PortfolioData";
+import * as Icons from "lucide-react";
 
 const Portfolio = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/portfolio/")
+      .then((res) => res.json())
+      .then((data) => setItems(data))
+      .catch((err) => console.error("Error fetching portfolio:", err));
+  }, []);
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,16 +19,19 @@ const Portfolio = () => {
           BLISSMAN PRODUCT PORTFOLIO
         </h1>
 
-        {/* Grid */}
+        {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioItems.map((item) => {
-            const Icon = item.icon; // must be a component
+          {items.map((item) => {
+            // Convert DB string → actual Lucide Icon
+            const Icon = Icons[item.icon] || null;
+
             return (
               <Link
                 key={item.id}
-                to={`/portfolio/${item.id}`}
+                to={`/portfolio/${item.slug || item.id}`}
                 className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 block"
               >
+                {/* Icon + Title */}
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="p-3 bg-gray-100 rounded-xl">
                     {Icon && <Icon className="h-8 w-8 text-blue-600" />}
@@ -28,10 +40,12 @@ const Portfolio = () => {
                     {item.title}
                   </h2>
                 </div>
+
+                {/* Description */}
                 <p className="text-gray-600">{item.description}</p>
 
                 {/* Extra list if available */}
-                {item.extra && (
+                {item.extra && item.extra.length > 0 && (
                   <ul className="list-disc list-inside text-sm mt-2 text-gray-600">
                     {item.extra.map((tech, i) => (
                       <li key={i}>{tech}</li>

@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import { portfolioItems } from "../data/PortfolioData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -8,40 +7,40 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function PortfolioDetail() {
-  const { id } = useParams();
-  const project = portfolioItems.find((p) => p.id === id);
-
+  const { id } = useParams(); // this will be the slug (e.g., "repairs")
+  const [project, setProject] = useState(null);
   const [openIndex, setOpenIndex] = useState(null);
   const swiperRef = useRef(null);
   const videoRefs = useRef([]); // store video elements
 
-  if (!project) {
-    return (
-      <h2 className="text-center text-xl mt-10">Portfolio item not found</h2>
-    );
-  }
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/portfolio/${id}`)
+      .then((res) => res.json())
+      .then((data) => setProject(data))
+      .catch((err) => console.error("Error loading project:", err));
+  }, [id]);
 
-  const Icon = project.icon ? project.icon : null;
+  if (!project) {
+    return <h2 className="text-center text-xl mt-10">Loading...</h2>;
+  }
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  // When slide changes → play video if it's a video slide, pause others
   const handleSlideChange = (swiper) => {
     videoRefs.current.forEach((video, i) => {
       if (!video) return;
       if (i === swiper.activeIndex) {
-        video.play().catch(() => {}); // autoplay
+        video.play().catch(() => {});
       } else {
         video.pause();
-        video.currentTime = 0; // reset
+        video.currentTime = 0;
       }
     });
   };
 
-  // When video ends → move to next slide
-  const handleVideoEnd = (index) => {
+  const handleVideoEnd = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
@@ -49,9 +48,8 @@ export default function PortfolioDetail() {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      {/* Project Title + Icon */}
+      {/* Project Title */}
       <div className="flex items-center space-x-4 mb-6">
-        {Icon && <Icon className="h-10 w-10 text-blue-600" />}
         <h1 className="text-3xl font-bold">{project.title}</h1>
       </div>
 
@@ -71,7 +69,7 @@ export default function PortfolioDetail() {
               <SwiperSlide key={i} className="flex items-center justify-center">
                 {item.type === "image" ? (
                   <img
-                    src={item.src}
+                    src={item.url}
                     alt={`${project.title} media ${i + 1}`}
                     className="w-full h-auto max-h-[70vh] object-contain"
                   />
@@ -83,11 +81,10 @@ export default function PortfolioDetail() {
                     onEnded={() => handleVideoEnd(i)}
                     className="w-full h-auto max-h-[70vh] object-contain rounded-xl"
                   >
-                    <source src={item.src} type="video/mp4" />
+                    <source src={item.url} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 )}
-                {/* Media caption */}
                 {item.caption && (
                   <div className="absolute bottom-1 left-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white text-lg p-3 text-center">
                     {item.caption}
@@ -103,7 +100,7 @@ export default function PortfolioDetail() {
       <p className="text-lg text-gray-700 mb-6">{project.description}</p>
 
       {/* Extra / Technologies */}
-      {project.extra && (
+      {project.extra && project.extra.length > 0 && (
         <div>
           <h2 className="text-xl font-semibold mb-2">Technologies / Tools</h2>
           <ul className="list-disc list-inside text-gray-600">

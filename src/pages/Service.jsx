@@ -1,8 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { blissmanServices } from "../data/ServiceData";
+
+import {
+  Palette,
+  ShieldCheck,
+  Network,
+  FileText,
+  Laptop,
+  Wrench,
+  Globe,
+} from "lucide-react";
+
+const iconMap = {
+  Palette,
+  ShieldCheck,
+  Network,
+  FileText,
+  Laptop,
+  Wrench,
+  Globe,
+};
 
 const Services = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/services/")
+      .then((res) => res.json())
+      .then((data) => setServices(data))
+      .catch((err) => console.error("Error fetching services:", err));
+  }, []);
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,28 +44,31 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blissmanServices.map((service) => (
-            <Link
-              key={service.id}
-              to={`/services/${service.id}`}
-              className="block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              <img
-                src={service.image}
-                alt={service.title}
-                className="h-40 w-full object-cover"
-              />
-              <div className="p-6">
-                <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                  <service.icon className="h-6 w-6 text-blue-600" />
+          {services.map((service) => {
+            const Icon = iconMap[service.icon] || Globe;
+            return (
+              <Link
+                key={service.id}
+                to={`/services/${service.id}`}
+                className="block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <img
+                  src={service.image_url}
+                  alt={service.title}
+                  className="h-40 w-full object-cover"
+                />
+                <div className="p-6">
+                  <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                    <Icon className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600">{service.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600">{service.description}</p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
