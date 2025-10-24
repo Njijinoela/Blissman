@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import API_BASE_URL from "../config";
 
 import {
   Palette,
@@ -30,7 +31,7 @@ const ServicesCarousel = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/services/")
+    fetch(`${API_BASE_URL}/services/`)
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((err) => console.error("Error fetching services:", err));

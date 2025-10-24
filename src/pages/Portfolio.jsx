@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Icons from "lucide-react";
+import API_BASE_URL from "../config";
 
 const Portfolio = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/portfolio/")
+    fetch(`${API_BASE_URL}/portfolio/`)
       .then((res) => res.json())
       .then((data) => setItems(data))
       .catch((err) => console.error("Error fetching portfolio:", err));
   }, []);
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-gray-900 text-center mb-12">
           BLISSMAN PRODUCT PORTFOLIO

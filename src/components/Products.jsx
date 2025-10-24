@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Truck, Phone, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const ProductsComponent = () => {
   const [cart, setCart] = useState([]);
@@ -15,7 +16,7 @@ const ProductsComponent = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/products/");
+        const res = await fetch(`${API_BASE_URL}/products/`);
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
         setProducts(data);
@@ -59,7 +60,7 @@ const ProductsComponent = () => {
   };
 
   return (
-    <section id="products" className="py-20 bg-gray-50 relative">
+    <section id="products" className="py-20 bg-gray-200 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header with Cart Button */}
         <div className="flex justify-between items-center mb-8">
@@ -89,7 +90,7 @@ const ProductsComponent = () => {
         {/* Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Shipping Card */}
-          <div className="bg-white rounded-xl p-6 shadow-md flex items-start gap-4">
+          <div className="bg-gray-300 rounded-xl p-6 shadow-md flex items-start gap-4">
             <div className="bg-black text-white p-3 rounded-full">
               <Truck className="h-6 w-6" />
             </div>
@@ -105,7 +106,7 @@ const ProductsComponent = () => {
           </div>
 
           {/* Call Card */}
-          <div className="bg-white rounded-xl p-6 shadow-md flex items-start gap-4">
+          <div className="bg-gray-300 rounded-xl p-6 shadow-md flex items-start gap-4">
             <div className="bg-black text-white p-3 rounded-full">
               <Phone className="h-6 w-6" />
             </div>
@@ -129,7 +130,7 @@ const ProductsComponent = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
+                className="bg-blue rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
               >
                 <div
                   onClick={() => setSelectedProduct(product)}

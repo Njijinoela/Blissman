@@ -27,7 +27,7 @@ const CallToAction = () => {
         </p>
 
         <h3 className="text-2xl sm:text-3xl font-bold mb-10 text-yellow-300 drop-shadow">
-          📞 Get in touch: 0711 262396 / 0780 008352
+          📞 Get in touch: 0780 008352
         </h3>
 
         {/* CTA Buttons */}

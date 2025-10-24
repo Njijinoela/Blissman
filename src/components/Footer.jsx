@@ -93,13 +93,13 @@ const Footer = () => {
             <div className="space-y-1 text-sm">
               <div className="flex items-center">
                 <Phone size={14} className="text-blue-400 mr-2" />
-                <span>+254 711 262396 / +254 780 008352</span>
+                <span>+254 780 008352</span>
               </div>
               <div className="flex items-center">
                 <Mail size={14} className="text-blue-400 mr-2" />
                 <span>
                   <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">
-                    Blissmantech@gmail.com
+                    info@blissman.ke
                   </a>
                 </span>
               </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
-import emailjs from "emailjs-com"; // 👈 import emailjs
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,15 +11,14 @@ const Contact = () => {
     message: "",
   });
 
-  const [loading, setLoading] = useState(false); // 👈 new state for loading
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true); // start loading
+    setLoading(true);
 
     emailjs
       .send(
@@ -35,20 +34,20 @@ const Contact = () => {
       )
       .then(
         () => {
-          alert("✅ Message sent successfully!");
+          alert(" Message sent successfully!");
           setFormData({ name: "", email: "", subject: "", message: "" });
-          setLoading(false); // stop loading
+          setLoading(false);
         },
         (error) => {
           console.error(error.text);
-          alert("❌ Failed to send message. Please try again.");
-          setLoading(false); // stop loading
+          alert(" Failed to send message. Please try again.");
+          setLoading(false);
         }
       );
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-50">
+    <section id="contact" className="py-20 bg-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -69,9 +68,7 @@ const Contact = () => {
               </div>
               <div>
                 <h4 className="text-lg font-semibold text-gray-900">Phone</h4>
-                <p className="text-gray-600">
-                  +254 711 262396 / +254 780 008352
-                </p>
+                <p className="text-gray-600">+254 780 008352</p>
               </div>
             </div>
 
@@ -81,7 +78,7 @@ const Contact = () => {
               </div>
               <div>
                 <h4 className="text-lg font-semibold text-gray-900">Email</h4>
-                <p className="text-gray-600">Blissmantech@gmail.com</p>
+                <p className="text-gray-600">info@blissman.ke</p>
               </div>
             </div>
 
@@ -116,7 +113,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-gray-50 rounded-xl shadow-lg p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
               Send Us a Message
             </h3>

@@ -14,6 +14,8 @@ import Products from "./components/Products";
 import PortfolioCarousel from "./pages/PortfolioCarousel";
 import PortfolioDetail from "./pages/PortfolioDetails";
 import CheckoutPage from "./components/CheckoutPage";
+import ProductsCarousel from "./pages/ProductCarousel";
+
 function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -21,19 +23,18 @@ function App() {
 
       <div className="flex-grow">
         <Routes>
-          {/* Home Page with multiple sections */}
           <Route
             path="/"
             element={
               <>
                 <Hero />
                 <PortfolioCarousel />
-                <ServicesCarousel />
+                <ProductsCarousel />
+                {/* <ServicesCarousel /> */}
               </>
             }
           />
 
-          {/* Separate pages */}
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:id" element={<PortfolioDetail />} />
           <Route path="/service" element={<Service />} />

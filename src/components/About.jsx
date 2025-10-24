@@ -18,7 +18,6 @@ import emailjs from "emailjs-com";
 import Contact from "./Contact";
 
 const About = () => {
-  // Contact form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,7 +39,6 @@ const About = () => {
     console.log("Form submitted:", formData);
   };
 
-  // About data
   const stats = [
     { icon: Users, number: "1,000+", label: "Happy Customers" },
     { icon: Award, number: "7+", label: "Years Experience" },
@@ -51,7 +49,7 @@ const About = () => {
   return (
     <>
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             {/* Left content */}

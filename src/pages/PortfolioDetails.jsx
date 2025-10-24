@@ -5,6 +5,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import API_BASE_URL from "../config";
 
 export default function PortfolioDetail() {
   const { id } = useParams(); // this will be the slug (e.g., "repairs")
@@ -14,7 +15,7 @@ export default function PortfolioDetail() {
   const videoRefs = useRef([]); // store video elements
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/portfolio/${id}`)
+    fetch(`${API_BASE_URL}/portfolio/${id}`)
       .then((res) => res.json())
       .then((data) => setProject(data))
       .catch((err) => console.error("Error loading project:", err));

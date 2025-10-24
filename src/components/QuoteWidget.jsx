@@ -13,12 +13,10 @@ const QuoteWidget = () => {
     message: "",
   });
 
-  // handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,7 +35,7 @@ const QuoteWidget = () => {
       )
       .then(
         () => {
-          alert("Quote request sent! ✅");
+          alert("Quote request sent!");
           setFormData({
             name: "",
             email: "",
@@ -45,7 +43,7 @@ const QuoteWidget = () => {
             message: "",
           });
           setLoading(false);
-          setExpanded(false); // close widget after success
+          setExpanded(false);
         },
         (error) => {
           console.error(error.text);

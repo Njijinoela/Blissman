@@ -17,6 +17,13 @@ export const portfolioItems = [
       "We diagnose hardware & software faults, remove malware & viruses, replace screens & much more.",
     icon: Wrench,
     images: ["/services/rcp1.jpeg", "/services/rcp2.jpeg"],
+    media: [
+      {
+        type: "image",
+        src: "/projects/repair1.jpeg",
+        caption: "Repairing CPU.",
+      },
+    ],
     faqs: [
       {
         question: "How long does a typical repair take?",

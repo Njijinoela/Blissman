@@ -7,18 +7,18 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
+    <header className="bg-gray-200 shadow-lg sticky top-0 z-50">
       {/* Top bar */}
       <div className="bg-blue-600 text-white text-sm py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <Phone size={14} />
-              <span>+254 711 262396 / +254 780 008352</span>
+              <span>+254 780 008352</span>
             </div>
             <div className="flex items-center space-x-2">
               <Mail size={14} />
-              <span>Blissmantech@gmail.com</span>
+              <span>info@blissman.ke</span>
             </div>
           </div>
           <div className="hidden md:block">

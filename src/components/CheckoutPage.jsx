@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import API_BASE_URL from "../config";
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const CheckoutPage = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/orders/", {
+      const res = await fetch(`${API_BASE_URL}/orders/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderDetails),

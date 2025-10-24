@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { portfolioItems } from "../data/PortfolioData";
 import FAQ from "../components/FAQ";
+import API_BASE_URL from "../config";
 
 import {
   Palette,
@@ -27,7 +28,7 @@ export default function ServiceDetails() {
   const [service, setService] = useState(null);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/services/${id}`)
+    fetch(`${API_BASE_URL}/services/${id}`)
       .then((res) => res.json())
       .then((data) => setService(data))
       .catch((err) => console.error("Error fetching service:", err));
