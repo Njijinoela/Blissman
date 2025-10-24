@@ -1,0 +1,2 @@
+dist.zip filter=lfs diff=lfs merge=lfs -text
+public/projects/setupcab1.mp4 filter=lfs diff=lfs merge=lfs -text
