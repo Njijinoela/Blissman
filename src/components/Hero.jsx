@@ -17,7 +17,7 @@ const Hero = () => {
   const current = blissmanServices[currentSlide];
 
   return (
-    <section id="home" className="relative h-[90vh] w-full overflow-hidden">
+    <section id="home" className="relative h-[60vh] w-full overflow-hidden">
       {/* Background Carousel */}
       <div className="absolute inset-0">
         <AnimatePresence>
@@ -26,7 +26,7 @@ const Hero = () => {
               index === currentSlide && (
                 <motion.div
                   key={service.id}
-                  className="absolute inset-0 bg-cover bg-center"
+                  className="absolute inset-0 bg-cover bg-center sm:bg-cover"
                   style={{ backgroundImage: `url(${service.image})` }}
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
