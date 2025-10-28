@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Portfolio from "./pages/Portfolio";
 import Service from "./pages/Service";
 import Header from "./components/Header";
@@ -7,7 +7,6 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import ServiceDetail from "./pages/ServiceDetails";
-import ServicesCarousel from "./pages/ServiceCarousel";
 import CallToAction from "./components/CallToAction";
 import QuoteWidget from "./components/QuoteWidget";
 import Products from "./components/Products";
@@ -15,8 +14,11 @@ import PortfolioCarousel from "./pages/PortfolioCarousel";
 import PortfolioDetail from "./pages/PortfolioDetails";
 import CheckoutPage from "./components/CheckoutPage";
 import ProductsCarousel from "./pages/ProductCarousel";
+import BackToTop from "./components/BackToTop";
 
 function App() {
+  const location = useLocation();
+  const isHero = location.pathname === "/";
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header />
@@ -29,8 +31,8 @@ function App() {
               <>
                 <Hero />
                 <PortfolioCarousel />
+                <CallToAction />
                 <ProductsCarousel />
-                {/* <ServicesCarousel /> */}
               </>
             }
           />
@@ -45,7 +47,8 @@ function App() {
         </Routes>
       </div>
       <QuoteWidget />
-      <CallToAction />
+      {!isHero && <CallToAction />}
+      <BackToTop />
       <Footer />
     </div>
   );

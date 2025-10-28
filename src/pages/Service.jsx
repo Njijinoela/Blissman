@@ -51,7 +51,7 @@ const Services = () => {
               <Link
                 key={service.id}
                 to={`/services/${service.id}`}
-                className="block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="block bg-gray-300 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
                 <img
                   src={service.image_url}

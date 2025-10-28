@@ -19,35 +19,21 @@ const PortfolioCarousel = () => {
   }, []);
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-12 bg-gray-200">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Our Projects</h2>
           <p className="text-gray-600 mt-2">
             Explore a preview of our projects — tailored to your business needs.
           </p>
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex justify-end mb-4 space-x-3">
-          <button className="custom-prev bg-blue-100 p-2 rounded-full hover:bg-blue-200 transition">
-            <ChevronLeft className="h-5 w-5 text-blue-600" />
-          </button>
-          <button className="custom-next bg-blue-100 p-2 rounded-full hover:bg-blue-200 transition">
-            <ChevronRight className="h-5 w-5 text-blue-600" />
-          </button>
-        </div>
-
         {/* Swiper Carousel */}
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={20}
+          spaceBetween={16}
           slidesPerView={1}
-          navigation={{
-            nextEl: ".custom-next",
-            prevEl: ".custom-prev",
-          }}
           pagination={{ clickable: true }}
           autoplay={{ delay: 4000 }}
           breakpoints={{
@@ -56,42 +42,62 @@ const PortfolioCarousel = () => {
             1024: { slidesPerView: 3 },
           }}
         >
-          {portfolioItems.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Link
-                to={`/portfolio/${item.id}`}
-                className="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
-              >
-                <img
-                  src={item.images?.[0] || item.image_url}
-                  alt={item.title}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="p-6">
-                  {item.icon && (
-                    <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                      <img
-                        src={item.icon_url || item.icon}
-                        alt=""
-                        className="h-6 w-6 text-blue-600"
-                      />
-                    </div>
-                  )}
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm">{item.description}</p>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
+          {portfolioItems.map((item) => {
+            // Handle multiple image formats safely
+            const imageSrc =
+              item.image_url ||
+              item.images?.[0] ||
+              item.thumbnail ||
+              "/placeholder-image.jpg"; // fallback
+
+            return (
+              <SwiperSlide key={item.id}>
+                <Link
+                  to={`/portfolio/${item.id}`}
+                  className="block bg-gray-300 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
+                >
+                  {/* Image */}
+                  <div className="relative w-full h-56 bg-gray-200 flex items-center justify-center">
+                    <img
+                      src={imageSrc}
+                      alt={item.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.src = "/placeholder-image.jpg"; // fallback if broken
+                      }}
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    {item.icon && (
+                      <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+                        <img
+                          src={item.icon_url || item.icon}
+                          alt=""
+                          className="h-6 w-6 object-contain text-blue-600"
+                        />
+                      </div>
+                    )}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-3">
+                      {item.description}
+                    </p>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
 
         {/* Show More Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <Link
             to="/portfolio"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-5 py-2.5 rounded-md text-sm hover:bg-blue-700 transition"
           >
             Show More
           </Link>
