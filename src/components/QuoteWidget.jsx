@@ -26,8 +26,10 @@ const QuoteWidget = () => {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID,
         {
+          type: "Quote Request",
           from_name: formData.name,
           from_email: formData.email,
+          phone: "N/A",
           service: formData.service,
           message: formData.message,
         },

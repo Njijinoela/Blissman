@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API_BASE_URL from "../config";
+import emailjs from "emailjs-com";
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -55,6 +56,24 @@ const CheckoutPage = () => {
       }
 
       const data = await res.json();
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID, // reuse quote template
+        {
+          type: "Order",
+          from_name: "New Order",
+          from_email: email,
+          phone,
+          service: "Customer Order",
+          message: `
+      Items: ${cart.map((i) => `${i.name} - KES ${i.price}`).join(", ")}
+      Total: KES ${cart.reduce((s, i) => s + i.price, 0)}
+    `,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
       alert(`✅ Order #${data.order_id} placed! Total: KES ${data.total}`);
       navigate("/products");
     } catch (error) {
