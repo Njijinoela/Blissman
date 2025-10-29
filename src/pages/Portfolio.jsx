@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Icons from "lucide-react";
 import API_BASE_URL from "../config";
+import { resolveMediaUrl } from "../config";
 
 const Portfolio = () => {
   const [items, setItems] = useState([]);
@@ -45,7 +46,7 @@ const Portfolio = () => {
                   {/* FRONT - IMAGE SIDE */}
                   <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden shadow-lg">
                     <img
-                      src={item.images?.[0] || item.image_url}
+                      src={resolveMediaUrl(item.images?.[0] || item.image_url)}
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />

@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import API_BASE_URL from "../config";
+import { resolveMediaUrl } from "../config";
 
 export default function PortfolioDetail() {
   const { id } = useParams(); // this will be the slug (e.g., "repairs")
@@ -47,6 +48,8 @@ export default function PortfolioDetail() {
     }
   };
 
+  console.log("Loaded media:", project.media);
+
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Project Title */}
@@ -70,7 +73,7 @@ export default function PortfolioDetail() {
               <SwiperSlide key={i} className="flex items-center justify-center">
                 {item.type === "image" ? (
                   <img
-                    src={item.url}
+                    src={resolveMediaUrl(item.url)}
                     alt={`${project.title} media ${i + 1}`}
                     className="w-full h-auto max-h-[70vh] object-contain"
                   />
@@ -82,7 +85,7 @@ export default function PortfolioDetail() {
                     onEnded={() => handleVideoEnd(i)}
                     className="w-full h-auto max-h-[70vh] object-contain rounded-xl"
                   >
-                    <source src={item.url} type="video/mp4" />
+                    <source src={resolveMediaUrl(item.url)} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 )}

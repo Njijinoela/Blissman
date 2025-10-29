@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import API_BASE_URL from "../config";
+import { resolveMediaUrl } from "../config";
 
 const PortfolioCarousel = () => {
   const [portfolioItems, setPortfolioItems] = useState([]);
@@ -44,11 +45,12 @@ const PortfolioCarousel = () => {
         >
           {portfolioItems.map((item) => {
             // Handle multiple image formats safely
-            const imageSrc =
+            const imageSrc = resolveMediaUrl(
               item.image_url ||
-              item.images?.[0] ||
-              item.thumbnail ||
-              "/placeholder-image.jpg"; // fallback
+                item.images?.[0] ||
+                item.thumbnail ||
+                "/placeholder-image.jpg"
+            ); // fallback
 
             return (
               <SwiperSlide key={item.id}>
