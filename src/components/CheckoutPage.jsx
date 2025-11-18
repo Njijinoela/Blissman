@@ -59,7 +59,7 @@ const CheckoutPage = () => {
 
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID, // reuse quote template
+        import.meta.env.VITE_EMAILJS_QUOTE_TEMPLATE_ID,
         {
           type: "Order",
           from_name: "New Order",

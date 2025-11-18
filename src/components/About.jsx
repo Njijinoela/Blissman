@@ -1,20 +1,8 @@
-import React, { useState } from "react";
-import {
-  Users,
-  Award,
-  Clock,
-  Globe,
-  Phone,
-  Mail,
-  MapPin,
-  Send,
-  X,
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Users, Award, Clock, Globe, X } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 
 import teamData from "../data/teamData";
-
-import emailjs from "emailjs-com";
 import Contact from "./Contact";
 
 const About = () => {
@@ -28,16 +16,21 @@ const About = () => {
   const [selectedMember, setSelectedMember] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedMember(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const stats = [
     { icon: Users, number: "1,000+", label: "Happy Customers" },
@@ -67,25 +60,22 @@ const About = () => {
                 our customers innovative technology solutions and accessories at
                 cost-effective prices, to satisfy the Kenyan market.
               </p>
-              <h5 className="text-3xl font-bold text-gray-900 mb-4">
-                Innovation
-              </h5>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                We strongly believe in giving our customers access to products
-                that meet the best innovation standards in each industry.
-              </p>
-              <h5 className="text-3xl font-bold text-gray-900 mb-4">Design</h5>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Integrated experiences are both physical and digital. Blissman
-                provides products where hardware and software work together
-                effectively, enhancing both staff and customer experiences.
-              </p>
-              <h5 className="text-3xl font-bold text-gray-900 mb-4">Build</h5>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                We build reliable IT infrastructure that supports your business
-                goals, reducing bottlenecks and inefficiencies in traditional IT
-                processes.
-              </p>
+
+              {["Innovation", "Design", "Build"].map((title, idx) => (
+                <div key={idx} className="mb-6">
+                  <h5 className="text-3xl font-bold text-gray-900 mb-4">
+                    {title}
+                  </h5>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {title === "Innovation" &&
+                      "We strongly believe in giving our customers access to products that meet the best innovation standards in each industry."}
+                    {title === "Design" &&
+                      "Integrated experiences are both physical and digital. Blissman provides products where hardware and software work together effectively, enhancing both staff and customer experiences."}
+                    {title === "Build" &&
+                      "We build reliable IT infrastructure that supports your business goals, reducing bottlenecks and inefficiencies in traditional IT processes."}
+                  </p>
+                </div>
+              ))}
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -109,28 +99,17 @@ const About = () => {
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
               <h3 className="text-2xl font-bold mb-6">Why Choose Blissman?</h3>
               <ul className="space-y-4 list-disc pl-6">
-                <li>
-                  Experience and background in both the local and international
-                  IT industry
-                </li>
-                <li>Vast experience in customer support and services</li>
-                <li>Strong local IT market knowledge for tailored solutions</li>
-                <li>
-                  Expertise in building IT networks from the ground up for
-                  efficiency
-                </li>
-                <li>
-                  Access to the best software to transform into a digital-first
-                  organization
-                </li>
-                <li>
-                  Maintenance and repair of IT accessories, including printers,
-                  desktops, and servers
-                </li>
-                <li>
-                  Consultancy services in software and hardware for a digital
-                  future
-                </li>
+                {[
+                  "Experience and background in both the local and international IT industry",
+                  "Vast experience in customer support and services",
+                  "Strong local IT market knowledge for tailored solutions",
+                  "Expertise in building IT networks from the ground up for efficiency",
+                  "Access to the best software to transform into a digital-first organization",
+                  "Maintenance and repair of IT accessories, including printers, desktops, and servers",
+                  "Consultancy services in software and hardware for a digital future",
+                ].map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -164,7 +143,7 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {teamData.map((member, index) => (
                 <div
-                  key={index}
+                  key={member.id || index}
                   className="text-center cursor-pointer hover:scale-105 transition"
                   onClick={() => setSelectedMember(member)}
                 >
@@ -176,7 +155,7 @@ const About = () => {
                     />
                   ) : (
                     <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 flex items-center justify-center shadow-lg mb-4">
-                      <span className="text-gray-500">No Image</span>
+                      <FaLinkedin className="text-gray-400 w-10 h-10" />
                     </div>
                   )}
                   <h4 className="text-xl font-semibold text-gray-900 mb-1">
@@ -200,9 +179,8 @@ const About = () => {
             className="bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-white-800"
+              className="absolute top-4 right-4 text-gray-500 hover:text-white"
               onClick={() => setSelectedMember(null)}
             >
               <X className="w-6 h-6" />
@@ -217,7 +195,7 @@ const About = () => {
                 />
               ) : (
                 <div className="w-28 h-28 rounded-full mx-auto bg-gray-200 flex items-center justify-center shadow-md mb-4">
-                  <span className="text-gray-500">No Image</span>
+                  <FaLinkedin className="text-gray-400 w-8 h-8" />
                 </div>
               )}
               <h3 className="text-2xl font-bold text-white">
@@ -225,7 +203,7 @@ const About = () => {
               </h3>
               <p className="text-white mb-4">{selectedMember.role}</p>
 
-              {selectedMember.social && selectedMember.social.length > 0 && (
+              {selectedMember.social?.length > 0 && (
                 <div className="flex justify-center gap-4 mb-4">
                   {selectedMember.social.map((social, idx) => (
                     <a

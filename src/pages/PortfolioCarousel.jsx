@@ -44,13 +44,12 @@ const PortfolioCarousel = () => {
           }}
         >
           {portfolioItems.map((item) => {
-            // Handle multiple image formats safely
             const imageSrc = resolveMediaUrl(
               item.image_url ||
                 item.images?.[0] ||
                 item.thumbnail ||
                 "/placeholder-image.jpg"
-            ); // fallback
+            );
 
             return (
               <SwiperSlide key={item.id}>
@@ -66,7 +65,7 @@ const PortfolioCarousel = () => {
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
-                        e.target.src = "/placeholder-image.jpg"; // fallback if broken
+                        e.target.src = "/placeholder-image.jpg";
                       }}
                     />
                   </div>

@@ -93,7 +93,7 @@ const Contact = () => {
             </div>
 
             <div className="flex items-center">
-              <div className="bg-blue-50 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
+              <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
                 <FaLinkedin className="h-6 w-6 text-blue-700" />
               </div>
               <div>
@@ -143,7 +143,9 @@ const Contact = () => {
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               >
-                <option value="">Select a subject</option>
+                <option value="" disabled>
+                  Select a subject
+                </option>
                 <option value="hosting">Web Hosting Inquiry</option>
                 <option value="support">IT Support Request</option>
                 <option value="billing">Billing Question</option>

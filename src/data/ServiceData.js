@@ -15,7 +15,7 @@ export const blissmanServices = [
     title: "Website Design",
     description:
       "We create visually stunning, responsive, and user-friendly websites tailored to your brand...",
-    image: "/services/webdesign.jpg",
+    image: "/services/websitedesign.jpg",
     portfolio: [],
     faqs: [
       {
@@ -51,7 +51,7 @@ export const blissmanServices = [
     title: "IT Support",
     description:
       "Our IT support team provides reliable troubleshooting, system maintenance, and proactive monitoring...",
-    image: "/services/itsuppport.webp",
+    image: "/services/itsupport.jpg",
     portfolio: ["repairs", "maintenance", "networking"],
     faqs: [
       {
@@ -87,7 +87,7 @@ export const blissmanServices = [
     title: "IT Consulting",
     description:
       "We offer strategic IT consulting to help businesses align technology with growth...",
-    image: "/services/itconsult.jpeg",
+    image: "/services/ItConsult.jpg",
     portfolio: ["software", "security"],
     faqs: [
       {
@@ -123,7 +123,7 @@ export const blissmanServices = [
     title: "Company Profile Design",
     description:
       "A well-crafted company profile sets you apart. We design professional and compelling profiles...",
-    image: "/services/profiledesign.jpeg",
+    image: "/services/cprofiledesi.jpg",
     portfolio: [],
     faqs: [
       {
@@ -158,7 +158,7 @@ export const blissmanServices = [
     title: "Computer Services",
     description:
       "From software installation and system upgrades to virus removal and performance optimization...",
-    image: "/services/compservice.jpeg",
+    image: "/services/cservices.jpg",
     portfolio: ["products"],
     faqs: [
       {
@@ -192,7 +192,7 @@ export const blissmanServices = [
     title: "Computer Repair Services",
     description:
       "We specialize in diagnosing and repairing computer issues — whether it’s faulty hardware, broken screens...",
-    image: "/services/crs.jpeg",
+    image: "/services/crepairservice.jpg",
     portfolio: ["repairs"],
     faqs: [
       {
@@ -227,7 +227,7 @@ export const blissmanServices = [
     title: "Domains & Hosting",
     description:
       "Secure your online presence with our domain registration and reliable hosting services...",
-    image: "/services/domain.jpeg",
+    image: "/services/domainhosting.jpg",
     portfolio: ["printing"],
     faqs: [
       {

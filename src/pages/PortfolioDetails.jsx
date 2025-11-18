@@ -18,7 +18,19 @@ export default function PortfolioDetail() {
   useEffect(() => {
     fetch(`${API_BASE_URL}/portfolio/${id}`)
       .then((res) => res.json())
-      .then((data) => setProject(data))
+      .then((data) => {
+        // Combine backend media + images into one array
+        const images = (data.images || []).map((url) => ({
+          type: "image",
+          url,
+          caption: "",
+        }));
+
+        const media = [...images, ...(data.media || [])];
+        data.media = media;
+
+        setProject(data);
+      })
       .catch((err) => console.error("Error loading project:", err));
   }, [id]);
 

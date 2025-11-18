@@ -112,7 +112,7 @@ const ProductsComponent = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
-                Call 0711 262396 / 0780 008352
+                Call 0780 008352
               </h3>
               <p className="text-gray-600">
                 In Doubt, Give Us A Call To Speak To Our Highly Experienced &

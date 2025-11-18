@@ -85,7 +85,7 @@ const Portfolio = () => {
                     <Link
                       to={`/portfolio/${item.slug || item.id}`}
                       className="text-blue-600 font-semibold mt-4 text-right hover:underline"
-                      onClick={(e) => e.stopPropagation()} // prevent flip click
+                      onClick={(e) => e.stopPropagation()}
                     >
                       View Details →
                     </Link>

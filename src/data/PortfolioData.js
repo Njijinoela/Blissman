@@ -1,4 +1,3 @@
-import { caption } from "framer-motion/client";
 import {
   Wrench,
   ShieldCheck,
